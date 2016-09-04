@@ -1,6 +1,6 @@
 {
   "name": "sweet-spec",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "The Sweet.js Term specification",
   "main": "dist/term-spec.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "build:sweet": "sjs --out-dir build src/term-spec.js",
     "build:babel": "babel --out-dir dist build",
     "build": "npm run build:sweet && npm run build:babel",
-    "publish": "npm run build"
+    "publish": "npm run build && cp term-spec.js.flow dist"
   },
   "author": "Tim Disney",
   "license": "BSD-2-Clause",
