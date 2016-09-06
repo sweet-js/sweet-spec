@@ -3,368 +3,540 @@
 import { spec } from 'sweet-spec-macro';
 
 spec Term {}
+export default Term;
 
 // Bindings
 spec BindingWithDefault : Term {
-  binding : any;
-  init : any;
+  binding : base;
+  init : base;
 }
+export { BindingWithDefault };
+
 spec BindingIdentifier : Term {
-  name : any;
+  name : base;
 }
+export { BindingIdentifier };
+
 spec ArrayBinding : Term {
-  elements : any;
-  restElement : any;
+  elements : base;
+  restElement : base;
 }
+export { ArrayBinding };
+
 spec ObjectBinding : Term {
-  properties : any;
+  properties : base;
 }
+export { ObjectBinding };
+
 spec BindingPropertyIdentifier : Term {
-  binding : any;
-  init : any;
+  binding : base;
+  init : base;
 }
+export { BindingPropertyIdentifier };
+
 spec BindingPropertyProperty : Term {
-  name : any;
-  binding : any;
+  name : base;
+  binding : base;
 }
+export { BindingPropertyProperty };
+
 
 
 spec Statement : Term {}
+export { Statement };
+
 spec Expression : Term {}
+export { Expression };
+
 
 // class
 spec ClassExpression : Expression {
-  name : any;
-  super : any;
-  elements : any;
+  name : base;
+  super : base;
+  elements : base;
 }
+export { ClassExpression };
+
 spec ClassDeclaration : Statement {
-  name : any;
-  super : any;
-  elements : any;
+  name : base;
+  super : base;
+  elements : base;
 }
+export { ClassDeclaration };
+
 spec ClassElement : Term {
-  isStatic : any;
-  method : any;
+  isStatic : base;
+  method : base;
 }
+export { ClassElement };
+
 
 
 // modules
 spec Module : Term {
-  directives : any;
-  items : any;
+  directives : base;
+  items : base;
 }
+export { Module };
+
 spec Import : Term {
-  moduleSpecifier : any;
-  defaultBinding : any;
-  namedImports : any;
-  forSyntax : any;
+  moduleSpecifier : base;
+  defaultBinding : base;
+  namedImports : base;
+  forSyntax : base;
 }
+export { Import };
+
 spec ImportNamespace : Term {
-  moduleSpecifier : any;
-  defaultBinding : any;
-  namespaceBinding : any;
-  forSyntax : any;
+  moduleSpecifier : base;
+  defaultBinding : base;
+  namespaceBinding : base;
+  forSyntax : base;
 }
+export { ImportNamespace };
+
 spec ImportSpecifier : Term {
-  name : any;
-  binding : any;
+  name : base;
+  binding : base;
 }
+export { ImportSpecifier };
+
 spec ExportAllFrom : Term {
-  moduleSpecifier : any;
+  moduleSpecifier : base;
 }
+export { ExportAllFrom };
+
 spec ExportFrom : Term {
-  namedExports : any;
-  moduleSpecifier : any;
+  namedExports : base;
+  moduleSpecifier : base;
 }
+export { ExportFrom };
+
 spec Export : Term {
-  declaration : any;
+  declaration : base;
 }
+export { Export };
+
 spec ExportDefault : Term {
-  body : any;
+  body : base;
 }
+export { ExportDefault };
+
 spec ExportSpecifier : Term {
-  name : any;
-  exportedName : any;
+  name : base;
+  exportedName : base;
 }
+export { ExportSpecifier };
+
 
 // property definition
 spec Method : Term {
-  name : any;
-  body : any;
-  isGenerator : any;
-  params : any;
+  name : base;
+  body : base;
+  isGenerator : base;
+  params : base;
 }
+export { Method };
+
 spec Getter : Term {
-  name : any;
-  body : any;
+  name : base;
+  body : base;
 }
+export { Getter };
+
 spec Setter : Term {
-  name : any;
-  body : any;
-  param : any;
+  name : base;
+  body : base;
+  param : base;
 }
+export { Setter };
+
 spec DataProperty : Term {
-  name : any;
-  expression : any;
+  name : base;
+  expression : base;
 }
+export { DataProperty };
+
 spec ShorthandProperty : Term {
-  name : any;
+  name : base;
 }
+export { ShorthandProperty };
+
 spec StaticPropertyName : Term {
-  value : any;
+  value : base;
 }
+export { StaticPropertyName };
+
 spec ComputedPropertyName : Term {
-  expression : any;
+  expression : base;
 }
+export { ComputedPropertyName };
+
 
 // literals
 spec LiteralBooleanExpression : Expression {
-  value : any;
+  value : base;
 }
+export { LiteralBooleanExpression };
+
 spec LiteralInfinityExpression : Expression { }
 spec LiteralNullExpression : Expression { }
 spec LiteralNumericExpression : Expression {
-  value : any;
+  value : base;
 }
+export { LiteralNumericExpression };
+
 spec LiteralRegExpExpression : Expression {
-  pattern : any;
-  flags : any;
+  pattern : base;
+  flags : base;
 }
+export { LiteralRegExpExpression };
+
 spec LiteralStringExpression : Expression {
-  value : any;
+  value : base;
 }
+export { LiteralStringExpression };
+
 
 
 // expressions
 spec ArrayExpression : Expression {
-  elements : any;
+  elements : base;
 }
+export { ArrayExpression };
+
 spec ArrowExpression : Expression {
-  params : any;
-  body : any;
+  params : base;
+  body : base;
 }
+export { ArrowExpression };
+
 spec AssignmentExpression : Expression {
-  binding : any;
-  expression : any;
+  binding : base;
+  expression : base;
 }
+export { AssignmentExpression };
+
 spec BinaryExpression : Expression {
-  operator : any;
-  left : any;
-  right : any;
+  operator : base;
+  left : base;
+  right : base;
 }
+export { BinaryExpression };
+
 spec CallExpression : Expression {
-  callee : any;
-  arguments : any;
+  callee : base;
+  arguments : base;
 }
+export { CallExpression };
+
 spec ComputedAssignmentExpression : Expression {
-  operator : any;
-  binding : any;
-  expression : any;
+  operator : base;
+  binding : base;
+  expression : base;
 }
+export { ComputedAssignmentExpression };
+
 spec ComputedMemberExpression : Expression {
-  object : any;
-  expression : any;
+  object : base;
+  expression : base;
 }
+export { ComputedMemberExpression };
+
 spec ConditionalExpression : Expression {
-  test : any;
-  consequent : any;
-  alternate : any;
+  test : base;
+  consequent : base;
+  alternate : base;
 }
+export { ConditionalExpression };
+
 spec FunctionExpression : Expression {
-  name : any;
-  isGenerator : any;
-  params : any;
-  body : any;
+  name : base;
+  isGenerator : base;
+  params : base;
+  body : base;
 }
+export { FunctionExpression };
+
 spec IdentifierExpression : Expression {
-  name : any;
+  name : base;
 }
+export { IdentifierExpression };
+
 spec NewExpression : Expression {
-  callee : any;
-  arguments : any;
+  callee : base;
+  arguments : base;
 }
+export { NewExpression };
+
 spec NewTargetExpression : Expression { }
 spec ObjectExpression : Expression {
-  properties : any;
+  properties : base;
 }
+export { ObjectExpression };
+
 spec UnaryExpression : Expression {
-  operator : any;
-  operand : any;
+  operator : base;
+  operand : base;
 }
+export { UnaryExpression };
+
 spec StaticMemberExpression : Expression {
-  object : any;
-  property : any;
+  object : base;
+  property : base;
 }
+export { StaticMemberExpression };
+
 spec TemplateExpression : Expression {
-  tag : any;
-  elements : any;
+  tag : base;
+  elements : base;
 }
+export { TemplateExpression };
+
 spec ThisExpression : Expression {
-  stx : any
+  stx : base
 }
+export { ThisExpression };
+
 spec UpdateExpression : Expression {
-  isPrefix : any;
-  operator : any;
-  operand : any;
+  isPrefix : base;
+  operator : base;
+  operand : base;
 }
+export { UpdateExpression };
+
 spec YieldExpression : Expression {
-  expression : any;
+  expression : base;
 }
+export { YieldExpression };
+
 spec YieldGeneratorExpression : Expression {
-  expression : any;
+  expression : base;
 }
+export { YieldGeneratorExpression };
+
 spec ParenthesizedExpression : Expression {
-  inner : any;
+  inner : base;
 }
+export { ParenthesizedExpression };
+
 
 // statements
 spec BlockStatement : Statement {
-  block : any;
+  block : base;
 }
+export { BlockStatement };
+
 spec BreakStatement : Statement {
-  label : any;
+  label : base;
 }
+export { BreakStatement };
+
 spec ContinueStatement : Statement {
-  label : any;
+  label : base;
 }
+export { ContinueStatement };
+
 spec CompoundAssignmentExpression : Statement {
-  binding : any;
-  operator : any;
-  expression : any;
+  binding : base;
+  operator : base;
+  expression : base;
 }
+export { CompoundAssignmentExpression };
+
 spec DebuggerStatement : Statement { }
 spec DoWhileStatement : Statement {
-  test : any;
-  body : any;
+  test : base;
+  body : base;
 }
+export { DoWhileStatement };
+
 spec EmptyStatement : Statement { }
 spec ExpressionStatement : Statement {
-  expression : any;
+  expression : base;
 }
+export { ExpressionStatement };
+
 spec ForInStatement : Statement {
-  left : any;
-  right : any;
-  body : any;
+  left : base;
+  right : base;
+  body : base;
 }
+export { ForInStatement };
+
 spec ForOfStatement : Statement {
-  left : any;
-  right : any;
-  body : any;
+  left : base;
+  right : base;
+  body : base;
 }
+export { ForOfStatement };
+
 spec ForStatement : Statement {
-  init : any;
-  test : any;
-  update : any;
-  body : any;
+  init : base;
+  test : base;
+  update : base;
+  body : base;
 }
+export { ForStatement };
+
 spec IfStatement : Statement {
-  test : any;
-  consequent : any;
-  alternate : any;
+  test : base;
+  consequent : base;
+  alternate : base;
 }
+export { IfStatement };
+
 spec LabeledStatement : Statement {
-  label : any;
-  body : any;
+  label : base;
+  body : base;
 }
+export { LabeledStatement };
+
 spec ReturnStatement : Statement {
-  expression : any;
+  expression : base;
 }
+export { ReturnStatement };
+
 spec SwitchStatement : Statement {
-  discriminant : any;
-  cases : any;
+  discriminant : base;
+  cases : base;
 }
+export { SwitchStatement };
+
 spec SwitchStatementWithDefault : Statement {
-  discriminant : any;
-  preDefaultCases : any;
-  defaultCase : any;
-  postDefaultCases : any;
+  discriminant : base;
+  preDefaultCases : base;
+  defaultCase : base;
+  postDefaultCases : base;
 }
+export { SwitchStatementWithDefault };
+
 spec ThrowStatement : Statement {
-  expression : any;
+  expression : base;
 }
+export { ThrowStatement };
+
 spec TryCatchStatement : Statement {
-  body : any;
-  catchClause : any;
+  body : base;
+  catchClause : base;
 }
+export { TryCatchStatement };
+
 spec TryFinallyStatement : Statement {
-  body : any;
-  catchClause : any;
-  finalizer : any;
+  body : base;
+  catchClause : base;
+  finalizer : base;
 }
+export { TryFinallyStatement };
+
 spec VariableDeclarationStatement : Statement {
-  declaration : any;
+  declaration : base;
 }
+export { VariableDeclarationStatement };
+
 spec WithStatement : Statement {
-  object : any;
-  body : any;
+  object : base;
+  body : base;
 }
+export { WithStatement };
+
 spec WhileStatement : Statement {
-  test : any;
-  body : any;
+  test : base;
+  body : base;
 }
+export { WhileStatement };
+
 
 // other
 spec Pragma : Term {
-  kind : any;
-  items : any;
+  kind : base;
+  items : base;
 }
+export { Pragma };
+
 spec Block : Term {
-  statements : any;
+  statements : base;
 }
+export { Block };
+
 spec CatchClause : Term {
-  binding : any;
-  body : any;
+  binding : base;
+  body : base;
 }
+export { CatchClause };
+
 spec Directive : Term {
-  rawValue : any;
+  rawValue : base;
 }
+export { Directive };
+
 spec FormalParameters : Term {
-  items : any;
-  rest : any;
+  items : base;
+  rest : base;
 }
+export { FormalParameters };
+
 spec FunctionBody : Term {
-  directives : any;
-  statements : any;
+  directives : base;
+  statements : base;
 }
+export { FunctionBody };
+
 spec FunctionDeclaration : Statement {
-  name : any;
-  isGenerator : any;
-  params : any;
-  body : any;
+  name : base;
+  isGenerator : base;
+  params : base;
+  body : base;
 }
+export { FunctionDeclaration };
+
 spec Script : Term {
-  directives : any;
-  statements : any;
+  directives : base;
+  statements : base;
 }
+export { Script };
+
 spec SpreadElement : Term {
-  expression : any;
+  expression : base;
 }
+export { SpreadElement };
+
 spec Super : Term { }
 spec SwitchCase : Term {
-  test : any;
-  consequent : any;
+  test : base;
+  consequent : base;
 }
-spec SwitchDefault : Term {
-  consequent : any;
-}
-spec TemplateElement : Term {
-  rawValue : any;
-}
-spec SyntaxTemplate : Term {
-  template : any;
-}
-spec SyntaxQuote : Term {
-  name : any;
-  template : any;
-}
-spec VariableDeclaration : Term {
-  kind : any;
-  declarators : any;
-}
-spec VariableDeclarator : Term {
-  binding : any;
-  init : any;
-}
+export { SwitchCase };
 
-export default Term;
+spec SwitchDefault : Term {
+  consequent : base;
+}
+export { SwitchDefault };
+
+spec TemplateElement : Term {
+  rawValue : base;
+}
+export { TemplateElement };
+
+spec SyntaxTemplate : Term {
+  template : base;
+}
+export { SyntaxTemplate };
+
+spec SyntaxQuote : Term {
+  name : base;
+  template : base;
+}
+export { SyntaxQuote };
+
+spec VariableDeclaration : Term {
+  kind : base;
+  declarators : base;
+}
+export { VariableDeclaration };
+
+spec VariableDeclarator : Term {
+  binding : base;
+  init : base;
+}
+export { VariableDeclarator };
