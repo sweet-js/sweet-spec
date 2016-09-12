@@ -74,8 +74,8 @@ export { ClassElement };
 
 // modules
 spec Module : Term {
-  directives : base;
-  items : base;
+  directives : base[];
+  items : Statement[];
 }
 export { Module };
 
@@ -353,7 +353,7 @@ export { DoWhileStatement };
 
 spec EmptyStatement : Statement { }
 spec ExpressionStatement : Statement {
-  expression : base;
+  expression : Expression;
 }
 export { ExpressionStatement };
 
