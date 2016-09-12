@@ -8,8 +8,9 @@
     "prebuild": "mkdir -p dist && mkdir -p build",
     "build:sweet": "sjs --out-dir build src/term-spec.js",
     "build:babel": "babel --out-dir dist build",
-    "build": "npm run build:sweet && npm run build:babel",
-    "publish": "npm run build && cp term-spec.js.flow dist"
+    "build:flow": "sh gen-flow.sh",
+    "build": "npm run build:sweet && npm run build:babel && npm run build:flow",
+    "publish": "npm run build"
   },
   "author": "Tim Disney",
   "license": "BSD-2-Clause",
