@@ -1,542 +1,449 @@
 #lang 'sweet.js';
+import { declare } from 'sweet-spec-macro';
 
-import { spec } from 'sweet-spec-macro';
-
-spec Term {}
-export default Term;
+declare class Term {}
 
 // Bindings
-spec BindingWithDefault : Term {
-  binding : base;
-  init : base;
+declare class BindingWithDefault extends Term {
+  binding: any;
+  init: any;
 }
-export { BindingWithDefault };
 
-spec BindingIdentifier : Term {
-  name : base;
+declare class BindingIdentifier extends Term {
+  name: any;
 }
-export { BindingIdentifier };
 
-spec ArrayBinding : Term {
-  elements : base;
-  restElement : base;
+declare class ArrayBinding extends Term {
+  elements: any;
+  restElement: any;
 }
-export { ArrayBinding };
 
-spec ObjectBinding : Term {
-  properties : base;
+declare class ObjectBinding extends Term {
+  properties: any;
 }
-export { ObjectBinding };
 
-spec BindingPropertyIdentifier : Term {
-  binding : base;
-  init : base;
+declare class BindingPropertyIdentifier extends Term {
+  binding: any;
+  init: any;
 }
-export { BindingPropertyIdentifier };
 
-spec BindingPropertyProperty : Term {
-  name : base;
-  binding : base;
+declare class BindingPropertyProperty extends Term {
+  name: any;
+  binding: any;
 }
-export { BindingPropertyProperty };
 
+declare class Statement extends Term {}
 
-
-spec Statement : Term {}
-export { Statement };
-
-spec Expression : Term {}
-export { Expression };
-
+declare class Expression extends Term {}
 
 // class
-spec ClassExpression : Expression {
-  name : base;
-  super : base;
-  elements : base;
+declare class ClassExpression extends Expression {
+  name: any;
+  super: any;
+  elements: any;
 }
-export { ClassExpression };
 
-spec ClassDeclaration : Statement {
-  name : base;
-  super : base;
-  elements : base;
+declare class ClassDeclaration extends Statement {
+  name: any;
+  super: any;
+  elements: any;
 }
-export { ClassDeclaration };
 
-spec ClassElement : Term {
-  isStatic : base;
-  method : base;
+declare class ClassElement extends Term {
+  isStatic: any;
+  method: any;
 }
-export { ClassElement };
-
 
 
 // modules
-spec Module : Term {
-  directives : base[];
+declare class Module extends Term {
+  directives: any[];
   items : Statement[];
 }
-export { Module };
 
-spec Import : Term {
-  moduleSpecifier : base;
-  defaultBinding : base;
-  namedImports : base;
-  forSyntax : base;
+declare class Import extends Term {
+  moduleSpecifier: any;
+  defaultBinding: any;
+  namedImports: any;
+  forSyntax: any;
 }
-export { Import };
 
-spec ImportNamespace : Term {
-  moduleSpecifier : base;
-  defaultBinding : base;
-  namespaceBinding : base;
-  forSyntax : base;
+declare class ImportNamespace extends Term {
+  moduleSpecifier: any;
+  defaultBinding: any;
+  namespaceBinding: any;
+  forSyntax: any;
 }
-export { ImportNamespace };
 
-spec ImportSpecifier : Term {
-  name : base;
-  binding : base;
+declare class ImportSpecifier extends Term {
+  name: any;
+  binding: any;
 }
-export { ImportSpecifier };
 
-spec ExportAllFrom : Term {
-  moduleSpecifier : base;
+declare class ExportAllFrom extends Term {
+  moduleSpecifier: any;
 }
-export { ExportAllFrom };
 
-spec ExportFrom : Term {
-  namedExports : base;
-  moduleSpecifier : base;
+declare class ExportFrom extends Term {
+  namedExports: any;
+  moduleSpecifier: any;
 }
-export { ExportFrom };
 
-spec Export : Term {
-  declaration : base;
+declare class Export extends Term {
+  declaration: any;
 }
-export { Export };
 
-spec ExportDefault : Term {
-  body : base;
+declare class ExportDefault extends Term {
+  body: any;
 }
-export { ExportDefault };
 
-spec ExportSpecifier : Term {
-  name : base;
-  exportedName : base;
+declare class ExportSpecifier extends Term {
+  name: any;
+  exportedName: any;
 }
-export { ExportSpecifier };
 
 
 // property definition
-spec Method : Term {
-  name : base;
-  body : base;
-  isGenerator : base;
-  params : base;
+declare class Method extends Term {
+  name: any;
+  body: any;
+  isGenerator: any;
+  params: any;
 }
-export { Method };
 
-spec Getter : Term {
-  name : base;
-  body : base;
+declare class Getter extends Term {
+  name: any;
+  body: any;
 }
-export { Getter };
 
-spec Setter : Term {
-  name : base;
-  body : base;
-  param : base;
+declare class Setter extends Term {
+  name: any;
+  body: any;
+  param: any;
 }
-export { Setter };
 
-spec DataProperty : Term {
-  name : base;
-  expression : base;
+declare class DataProperty extends Term {
+  name: any;
+  expression: any;
 }
-export { DataProperty };
 
-spec ShorthandProperty : Term {
-  name : base;
+declare class ShorthandProperty extends Term {
+  name: any;
 }
-export { ShorthandProperty };
 
-spec StaticPropertyName : Term {
-  value : base;
+declare class StaticPropertyName extends Term {
+  value: any;
 }
-export { StaticPropertyName };
 
-spec ComputedPropertyName : Term {
-  expression : base;
+declare class ComputedPropertyName extends Term {
+  expression: any;
 }
-export { ComputedPropertyName };
 
 
 // literals
-spec LiteralBooleanExpression : Expression {
-  value : base;
+declare class LiteralBooleanExpression extends Expression {
+  value: any;
 }
-export { LiteralBooleanExpression };
 
-spec LiteralInfinityExpression : Expression { }
-spec LiteralNullExpression : Expression { }
-spec LiteralNumericExpression : Expression {
-  value : base;
+declare class LiteralInfinityExpression extends Expression { }
+declare class LiteralNullExpression extends Expression { }
+declare class LiteralNumericExpression extends Expression {
+  value: any;
 }
-export { LiteralNumericExpression };
 
-spec LiteralRegExpExpression : Expression {
-  pattern : base;
-  flags : base;
+declare class LiteralRegExpExpression extends Expression {
+  pattern: any;
+  flags: any;
 }
-export { LiteralRegExpExpression };
 
-spec LiteralStringExpression : Expression {
-  value : base;
+declare class LiteralStringExpression extends Expression {
+  value: any;
 }
-export { LiteralStringExpression };
 
 
 
 // expressions
-spec ArrayExpression : Expression {
-  elements : base;
+declare class ArrayExpression extends Expression {
+  elements: any;
 }
-export { ArrayExpression };
 
-spec ArrowExpression : Expression {
-  params : base;
-  body : base;
+declare class ArrowExpression extends Expression {
+  params: any;
+  body: any;
 }
-export { ArrowExpression };
 
-spec AssignmentExpression : Expression {
-  binding : base;
-  expression : base;
+declare class AssignmentExpression extends Expression {
+  binding: any;
+  expression: any;
 }
-export { AssignmentExpression };
 
-spec BinaryExpression : Expression {
-  operator : base;
-  left : base;
-  right : base;
+declare class BinaryExpression extends Expression {
+  operator: any;
+  left: any;
+  right: any;
 }
-export { BinaryExpression };
 
-spec CallExpression : Expression {
-  callee : base;
-  arguments : base;
+declare class CallExpression extends Expression {
+  callee: any;
+  arguments: any;
 }
-export { CallExpression };
 
-spec ComputedAssignmentExpression : Expression {
-  operator : base;
-  binding : base;
-  expression : base;
+declare class ComputedAssignmentExpression extends Expression {
+  operator: any;
+  binding: any;
+  expression: any;
 }
-export { ComputedAssignmentExpression };
 
-spec ComputedMemberExpression : Expression {
-  object : base;
-  expression : base;
+declare class ComputedMemberExpression extends Expression {
+  object: any;
+  expression: any;
 }
-export { ComputedMemberExpression };
 
-spec ConditionalExpression : Expression {
-  test : base;
-  consequent : base;
-  alternate : base;
+declare class ConditionalExpression extends Expression {
+  test: any;
+  consequent: any;
+  alternate: any;
 }
-export { ConditionalExpression };
 
-spec FunctionExpression : Expression {
-  name : base;
-  isGenerator : base;
-  params : base;
-  body : base;
+declare class FunctionExpression extends Expression {
+  name: any;
+  isGenerator: any;
+  params: any;
+  body: any;
 }
-export { FunctionExpression };
 
-spec IdentifierExpression : Expression {
-  name : base;
+declare class IdentifierExpression extends Expression {
+  name: any;
 }
-export { IdentifierExpression };
 
-spec NewExpression : Expression {
-  callee : base;
-  arguments : base;
+declare class NewExpression extends Expression {
+  callee: any;
+  arguments: any;
 }
-export { NewExpression };
 
-spec NewTargetExpression : Expression { }
-spec ObjectExpression : Expression {
-  properties : base;
+declare class NewTargetExpression extends Expression { }
+declare class ObjectExpression extends Expression {
+  properties: any;
 }
-export { ObjectExpression };
 
-spec UnaryExpression : Expression {
-  operator : base;
-  operand : base;
+declare class UnaryExpression extends Expression {
+  operator: any;
+  operand: any;
 }
-export { UnaryExpression };
 
-spec StaticMemberExpression : Expression {
-  object : base;
-  property : base;
+declare class StaticMemberExpression extends Expression {
+  object: any;
+  property: any;
 }
-export { StaticMemberExpression };
 
-spec TemplateExpression : Expression {
-  tag : base;
-  elements : base;
+declare class TemplateExpression extends Expression {
+  tag: any;
+  elements: any;
 }
-export { TemplateExpression };
 
-spec ThisExpression : Expression {
-  stx : base
+declare class ThisExpression extends Expression {
+  stx: any
 }
-export { ThisExpression };
 
-spec UpdateExpression : Expression {
-  isPrefix : base;
-  operator : base;
-  operand : base;
+declare class UpdateExpression extends Expression {
+  isPrefix: any;
+  operator: any;
+  operand: any;
 }
-export { UpdateExpression };
 
-spec YieldExpression : Expression {
-  expression : base;
+declare class YieldExpression extends Expression {
+  expression: any;
 }
-export { YieldExpression };
 
-spec YieldGeneratorExpression : Expression {
-  expression : base;
+declare class YieldGeneratorExpression extends Expression {
+  expression: any;
 }
-export { YieldGeneratorExpression };
 
-spec ParenthesizedExpression : Expression {
-  inner : base;
+declare class ParenthesizedExpression extends Expression {
+  inner: any;
 }
-export { ParenthesizedExpression };
 
 
 // statements
-spec BlockStatement : Statement {
-  block : base;
+declare class BlockStatement extends Statement {
+  block: any;
 }
-export { BlockStatement };
 
-spec BreakStatement : Statement {
-  label : base;
+declare class BreakStatement extends Statement {
+  label: any;
 }
-export { BreakStatement };
 
-spec ContinueStatement : Statement {
-  label : base;
+declare class ContinueStatement extends Statement {
+  label: any;
 }
-export { ContinueStatement };
 
-spec CompoundAssignmentExpression : Statement {
-  binding : base;
-  operator : base;
-  expression : base;
+declare class CompoundAssignmentExpression extends Statement {
+  binding: any;
+  operator: any;
+  expression: any;
 }
-export { CompoundAssignmentExpression };
 
-spec DebuggerStatement : Statement { }
-spec DoWhileStatement : Statement {
-  test : base;
-  body : base;
+declare class DebuggerStatement extends Statement { }
+declare class DoWhileStatement extends Statement {
+  test: any;
+  body: any;
 }
-export { DoWhileStatement };
 
-spec EmptyStatement : Statement { }
-spec ExpressionStatement : Statement {
+declare class EmptyStatement extends Statement { }
+declare class ExpressionStatement extends Statement {
   expression : Expression;
 }
-export { ExpressionStatement };
 
-spec ForInStatement : Statement {
-  left : base;
-  right : base;
-  body : base;
+declare class ForInStatement extends Statement {
+  left: any;
+  right: any;
+  body: any;
 }
-export { ForInStatement };
 
-spec ForOfStatement : Statement {
-  left : base;
-  right : base;
-  body : base;
+declare class ForOfStatement extends Statement {
+  left: any;
+  right: any;
+  body: any;
 }
-export { ForOfStatement };
 
-spec ForStatement : Statement {
-  init : base;
-  test : base;
-  update : base;
-  body : base;
+declare class ForStatement extends Statement {
+  init: any;
+  test: any;
+  update: any;
+  body: any;
 }
-export { ForStatement };
 
-spec IfStatement : Statement {
-  test : base;
-  consequent : base;
-  alternate : base;
+declare class IfStatement extends Statement {
+  test: any;
+  consequent: any;
+  alternate: any;
 }
-export { IfStatement };
 
-spec LabeledStatement : Statement {
-  label : base;
-  body : base;
+declare class LabeledStatement extends Statement {
+  label: any;
+  body: any;
 }
-export { LabeledStatement };
 
-spec ReturnStatement : Statement {
-  expression : base;
+declare class ReturnStatement extends Statement {
+  expression: any;
 }
-export { ReturnStatement };
 
-spec SwitchStatement : Statement {
-  discriminant : base;
-  cases : base;
+declare class SwitchStatement extends Statement {
+  discriminant: any;
+  cases: any;
 }
-export { SwitchStatement };
 
-spec SwitchStatementWithDefault : Statement {
-  discriminant : base;
-  preDefaultCases : base;
-  defaultCase : base;
-  postDefaultCases : base;
+declare class SwitchStatementWithDefault extends Statement {
+  discriminant: any;
+  preDefaultCases: any;
+  defaultCase: any;
+  postDefaultCases: any;
 }
-export { SwitchStatementWithDefault };
 
-spec ThrowStatement : Statement {
-  expression : base;
+declare class ThrowStatement extends Statement {
+  expression: any;
 }
-export { ThrowStatement };
 
-spec TryCatchStatement : Statement {
-  body : base;
-  catchClause : base;
+declare class TryCatchStatement extends Statement {
+  body: any;
+  catchClause: any;
 }
-export { TryCatchStatement };
 
-spec TryFinallyStatement : Statement {
-  body : base;
-  catchClause : base;
-  finalizer : base;
+declare class TryFinallyStatement extends Statement {
+  body: any;
+  catchClause: any;
+  finalizer: any;
 }
-export { TryFinallyStatement };
 
-spec VariableDeclarationStatement : Statement {
-  declaration : base;
+declare class VariableDeclarationStatement extends Statement {
+  declaration: any;
 }
-export { VariableDeclarationStatement };
 
-spec WithStatement : Statement {
-  object : base;
-  body : base;
+declare class WithStatement extends Statement {
+  object: any;
+  body: any;
 }
-export { WithStatement };
 
-spec WhileStatement : Statement {
-  test : base;
-  body : base;
+declare class WhileStatement extends Statement {
+  test: any;
+  body: any;
 }
-export { WhileStatement };
 
 
 // other
-spec Pragma : Term {
-  kind : base;
-  items : base;
+declare class Pragma extends Term {
+  kind: any;
+  items: any;
 }
-export { Pragma };
 
-spec Block : Term {
-  statements : base;
+declare class Block extends Term {
+  statements: any;
 }
-export { Block };
 
-spec CatchClause : Term {
-  binding : base;
-  body : base;
+declare class CatchClause extends Term {
+  binding: any;
+  body: any;
 }
-export { CatchClause };
 
-spec Directive : Term {
-  rawValue : base;
+declare class Directive extends Term {
+  rawValue: any;
 }
-export { Directive };
 
-spec FormalParameters : Term {
-  items : base;
-  rest : base;
+declare class FormalParameters extends Term {
+  items: any;
+  rest: any;
 }
-export { FormalParameters };
 
-spec FunctionBody : Term {
-  directives : base;
-  statements : base;
+declare class FunctionBody extends Term {
+  directives: any;
+  statements: any;
 }
-export { FunctionBody };
 
-spec FunctionDeclaration : Statement {
-  name : base;
-  isGenerator : base;
-  params : base;
-  body : base;
+declare class FunctionDeclaration extends Statement {
+  name: any;
+  isGenerator: any;
+  params: any;
+  body: any;
 }
-export { FunctionDeclaration };
 
-spec Script : Term {
-  directives : base;
-  statements : base;
+declare class Script extends Term {
+  directives: any;
+  statements: any;
 }
-export { Script };
 
-spec SpreadElement : Term {
-  expression : base;
+declare class SpreadElement extends Term {
+  expression: any;
 }
-export { SpreadElement };
 
-spec Super : Term { }
-spec SwitchCase : Term {
-  test : base;
-  consequent : base;
+declare class Super extends Term { }
+declare class SwitchCase extends Term {
+  test: any;
+  consequent: any;
 }
-export { SwitchCase };
 
-spec SwitchDefault : Term {
-  consequent : base;
+declare class SwitchDefault extends Term {
+  consequent: any;
 }
-export { SwitchDefault };
 
-spec TemplateElement : Term {
-  rawValue : base;
+declare class TemplateElement extends Term {
+  rawValue: any;
 }
-export { TemplateElement };
 
-spec SyntaxTemplate : Term {
-  template : base;
+declare class SyntaxTemplate extends Term {
+  template: any;
 }
-export { SyntaxTemplate };
 
-spec SyntaxQuote : Term {
-  name : base;
-  template : base;
+declare class SyntaxQuote extends Term {
+  name: any;
+  template: any;
 }
-export { SyntaxQuote };
 
-spec VariableDeclaration : Term {
-  kind : base;
-  declarators : base;
+declare class VariableDeclaration extends Term {
+  kind: any;
+  declarators: any;
 }
-export { VariableDeclaration };
 
-spec VariableDeclarator : Term {
-  binding : base;
-  init : base;
+declare class VariableDeclarator extends Term {
+  binding: any;
+  init: any;
 }
-export { VariableDeclarator };

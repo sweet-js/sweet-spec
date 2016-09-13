@@ -1,9 +1,0 @@
-// @flow
-
-
-class Term {
-  constructor(attrs: {});
-  reduce(reducer: {}): Term;
-}
-
-export default Term;
