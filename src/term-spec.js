@@ -179,8 +179,8 @@ declare class AssignmentExpression extends Expression {
 
 declare class BinaryExpression extends Expression {
   operator: any;
-  left: any;
-  right: any;
+  left: Expression;
+  right: Expression;
 }
 
 declare class CallExpression extends Expression {
@@ -228,7 +228,7 @@ declare class ObjectExpression extends Expression {
 
 declare class UnaryExpression extends Expression {
   operator: any;
-  operand: any;
+  operand: Expression;
 }
 
 declare class StaticMemberExpression extends Expression {
@@ -248,7 +248,7 @@ declare class ThisExpression extends Expression {
 declare class UpdateExpression extends Expression {
   isPrefix: any;
   operator: any;
-  operand: any;
+  operand: BindingIdentifier;
 }
 
 declare class YieldExpression extends Expression {
