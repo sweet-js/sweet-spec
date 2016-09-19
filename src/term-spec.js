@@ -184,8 +184,8 @@ declare class BinaryExpression extends Expression {
 }
 
 declare class CallExpression extends Expression {
-  callee: any;
-  arguments: any;
+  callee: Expression;
+  arguments: (SpreadElement | Expression)[];
 }
 
 declare class ComputedAssignmentExpression extends Expression {
@@ -412,7 +412,7 @@ declare class Script extends Term {
 }
 
 declare class SpreadElement extends Term {
-  expression: any;
+  expression: Expression;
 }
 
 declare class Super extends Term { }
