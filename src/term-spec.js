@@ -3,7 +3,31 @@ import { declare } from 'sweet-spec-macro';
 
 declare class Term {}
 
-// Bindings
+/* ***** Term Kinds ***** */
+
+declare class Statement extends Term {}
+declare class IterationStatement extends Statement {
+  body: Statement;
+}
+
+declare class Expression extends Term {}
+declare class MemberExpression extends Expression {
+  object: Expression | Super;
+}
+
+declare class PropertyName extends Term {}
+declare class ObjectProperty extends Term {}
+declare class NamedObjectProperty extends ObjectProperty {
+  name: PropertyName;
+}
+declare class MethodDefinition extends NamedObjectProperty {
+  body: FunctionBody;
+}
+
+/* ***** Bindings ***** */
+
+// typedef (ObjectBinding or ArrayBinding or BindingIdentifier or MemberExpression) Binding;
+
 declare class BindingWithDefault extends Term {
   binding: any;
   init: any;
@@ -14,27 +38,29 @@ declare class BindingIdentifier extends Term {
 }
 
 declare class ArrayBinding extends Term {
-  elements: any;
-  restElement: any;
+  // elements: (Binding | BindingWithDefault)[];
+  elements?: (ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault)[];
+  // restElement?: Binding
+  restElement?: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression;
 }
 
 declare class ObjectBinding extends Term {
-  properties: any;
+  properties: BindingProperty[];
 }
 
-declare class BindingPropertyIdentifier extends Term {
-  binding: any;
-  init: any;
+declare class BindingProperty extends Term {}
+
+declare class BindingPropertyIdentifier extends BindingProperty {
+  binding: BindingIdentifier;
+  init?: Expression;
 }
 
-declare class BindingPropertyProperty extends Term {
-  name: any;
-  binding: any;
+declare class BindingPropertyProperty extends BindingProperty {
+  name: PropertyName;
+  // binding: Binding | BindingWithDefault;
+  binding: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault;
 }
 
-declare class Statement extends Term {}
-
-declare class Expression extends Term {}
 
 // class
 declare class ClassExpression extends Expression {
@@ -104,39 +130,32 @@ declare class ExportSpecifier extends Term {
 
 
 // property definition
-declare class Method extends Term {
-  name: any;
-  body: any;
+declare class Method extends MethodDefinition {
   isGenerator: any;
-  params: any;
+  params: FormalParameters;
 }
 
-declare class Getter extends Term {
-  name: any;
-  body: any;
+declare class Getter extends MethodDefinition { }
+
+declare class Setter extends MethodDefinition {
+  param: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault;
+  // param: Binding or BindingWithDefault;
 }
 
-declare class Setter extends Term {
-  name: any;
-  body: any;
-  param: any;
+declare class DataProperty extends NamedObjectProperty {
+  expression: Expression;
 }
 
-declare class DataProperty extends Term {
-  name: any;
-  expression: any;
-}
-
-declare class ShorthandProperty extends Term {
+declare class ShorthandProperty extends ObjectProperty {
   name: any;
 }
 
-declare class StaticPropertyName extends Term {
+declare class StaticPropertyName extends PropertyName {
   value: any;
 }
 
-declare class ComputedPropertyName extends Term {
-  expression: any;
+declare class ComputedPropertyName extends PropertyName {
+  expression: Expression;
 }
 
 
@@ -164,7 +183,7 @@ declare class LiteralStringExpression extends Expression {
 
 // expressions
 declare class ArrayExpression extends Expression {
-  elements: any;
+  elements?: (SpreadElement | Expression)[];
 }
 
 declare class ArrowExpression extends Expression {
@@ -173,8 +192,9 @@ declare class ArrowExpression extends Expression {
 }
 
 declare class AssignmentExpression extends Expression {
-  binding: any;
-  expression: any;
+  // binding: Binding;
+  binding: BindingIdentifier | BindingPropertyProperty | BindingPropertyIdentifier | ObjectBinding | ArrayBinding | MemberExpression;
+  expression: Expression;
 }
 
 declare class BinaryExpression extends Expression {
@@ -188,21 +208,20 @@ declare class CallExpression extends Expression {
   arguments: (SpreadElement | Expression)[];
 }
 
-declare class ComputedAssignmentExpression extends Expression {
+declare class CompoundAssignmentExpression extends Expression {
+  binding: BindingIdentifier | MemberExpression;
   operator: any;
-  binding: any;
-  expression: any;
+  expression: Expression;
 }
 
-declare class ComputedMemberExpression extends Expression {
-  object: any;
-  expression: any;
+declare class ComputedMemberExpression extends MemberExpression {
+  expression: Expression;
 }
 
 declare class ConditionalExpression extends Expression {
-  test: any;
-  consequent: any;
-  alternate: any;
+  test: Expression;
+  consequent: Expression;
+  alternate: Expression;
 }
 
 declare class FunctionExpression extends Expression {
@@ -217,13 +236,13 @@ declare class IdentifierExpression extends Expression {
 }
 
 declare class NewExpression extends Expression {
-  callee: any;
-  arguments: any;
+  callee: Expression;
+  arguments: (SpreadElement | Expression)[];
 }
 
 declare class NewTargetExpression extends Expression { }
 declare class ObjectExpression extends Expression {
-  properties: any;
+  properties: ObjectProperty[];
 }
 
 declare class UnaryExpression extends Expression {
@@ -231,14 +250,13 @@ declare class UnaryExpression extends Expression {
   operand: Expression;
 }
 
-declare class StaticMemberExpression extends Expression {
-  object: any;
+declare class StaticMemberExpression extends MemberExpression {
   property: any;
 }
 
 declare class TemplateExpression extends Expression {
-  tag: any;
-  elements: any;
+  tag?: Expression;
+  elements: (Expression | TemplateElement)[];
 }
 
 declare class ThisExpression extends Expression {
@@ -252,7 +270,7 @@ declare class UpdateExpression extends Expression {
 }
 
 declare class YieldExpression extends Expression {
-  expression: any;
+  expression?: Expression;
 }
 
 declare class YieldGeneratorExpression extends Expression {
@@ -270,18 +288,13 @@ declare class BlockStatement extends Statement {
 }
 
 declare class BreakStatement extends Statement {
-  label: any;
+  label?: any;
 }
 
 declare class ContinueStatement extends Statement {
-  label: any;
+  label?: any;
 }
 
-declare class CompoundAssignmentExpression extends Statement {
-  binding: any;
-  operator: any;
-  expression: any;
-}
 
 declare class DebuggerStatement extends Statement { }
 declare class DoWhileStatement extends Statement {
@@ -390,8 +403,9 @@ declare class Directive extends Term {
 }
 
 declare class FormalParameters extends Term {
-  items: any;
-  rest: any;
+  // items: (Binding | BindingWithDefault)[];
+  items: (ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault)[];
+  rest?: BindingIdentifier;
 }
 
 declare class FunctionBody extends Term {
@@ -444,6 +458,7 @@ declare class VariableDeclaration extends Term {
 }
 
 declare class VariableDeclarator extends Term {
-  binding: any;
-  init: any;
+  binding: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression;
+  // binding: Binding;
+  init?: Expression;
 }
