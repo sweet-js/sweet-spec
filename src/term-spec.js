@@ -187,8 +187,8 @@ declare class ArrayExpression extends Expression {
 }
 
 declare class ArrowExpression extends Expression {
-  params: any;
-  body: any;
+  params: FormalParameters;
+  body: FunctionBody | Expression;
 }
 
 declare class AssignmentExpression extends Expression {
