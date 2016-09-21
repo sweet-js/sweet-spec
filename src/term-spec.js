@@ -64,20 +64,20 @@ declare class BindingPropertyProperty extends BindingProperty {
 
 // class
 declare class ClassExpression extends Expression {
-  name: any;
-  super: any;
-  elements: any;
+  name?: BindingIdentifier;
+  super?: Expression;
+  elements: ClassElement[];
 }
 
 declare class ClassDeclaration extends Statement {
-  name: any;
-  super: any;
-  elements: any;
+  name: BindingIdentifier;
+  super?: Expression;
+  elements: ClassElement[];
 }
 
 declare class ClassElement extends Term {
   isStatic: any;
-  method: any;
+  method: MethodDefinition;
 }
 
 
@@ -183,7 +183,7 @@ declare class LiteralStringExpression extends Expression {
 
 // expressions
 declare class ArrayExpression extends Expression {
-  elements?: (SpreadElement | Expression)[];
+  elements: (SpreadElement | Expression | null)[];
 }
 
 declare class ArrowExpression extends Expression {
@@ -204,7 +204,7 @@ declare class BinaryExpression extends Expression {
 }
 
 declare class CallExpression extends Expression {
-  callee: Expression;
+  callee: Expression | Super;
   arguments: (SpreadElement | Expression)[];
 }
 
@@ -274,7 +274,7 @@ declare class YieldExpression extends Expression {
 }
 
 declare class YieldGeneratorExpression extends Expression {
-  expression: any;
+  expression: Expression;
 }
 
 declare class ParenthesizedExpression extends Expression {
