@@ -26,7 +26,7 @@ declare class MethodDefinition extends NamedObjectProperty {
 
 /* ***** Bindings ***** */
 
-// typedef (ObjectBinding or ArrayBinding or BindingIdentifier or MemberExpression) Binding;
+// type Binding = (ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression);
 
 declare class BindingWithDefault extends Term {
   binding: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression;
@@ -124,7 +124,7 @@ declare class ExportDefault extends Term {
 }
 
 declare class ExportSpecifier extends Term {
-  name: any;
+  name?: any;
   exportedName: any;
 }
 
@@ -225,10 +225,10 @@ declare class ConditionalExpression extends Expression {
 }
 
 declare class FunctionExpression extends Expression {
-  name: any;
+  name?: BindingIdentifier;
   isGenerator: any;
-  params: any;
-  body: any;
+  params: FormalParameters;
+  body: FunctionBody;
 }
 
 declare class IdentifierExpression extends Expression {
@@ -284,7 +284,7 @@ declare class ParenthesizedExpression extends Expression {
 
 // statements
 declare class BlockStatement extends Statement {
-  block: any;
+  block: Block;
 }
 
 declare class BreakStatement extends Statement {
@@ -297,9 +297,8 @@ declare class ContinueStatement extends Statement {
 
 
 declare class DebuggerStatement extends Statement { }
-declare class DoWhileStatement extends Statement {
-  test: any;
-  body: any;
+declare class DoWhileStatement extends IterationStatement {
+  test: Expression;
 }
 
 declare class EmptyStatement extends Statement { }
@@ -307,79 +306,75 @@ declare class ExpressionStatement extends Statement {
   expression : Expression;
 }
 
-declare class ForInStatement extends Statement {
-  left: any;
-  right: any;
-  body: any;
+declare class ForInStatement extends IterationStatement {
+  left: VariableDeclaration | ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression;
+  right: Expression;
 }
 
-declare class ForOfStatement extends Statement {
-  left: any;
-  right: any;
-  body: any;
+declare class ForOfStatement extends IterationStatement {
+  left: VariableDeclaration | ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression;
+  right: Expression;
 }
 
-declare class ForStatement extends Statement {
-  init: any;
-  test: any;
-  update: any;
-  body: any;
+declare class ForStatement extends IterationStatement {
+  init?: VariableDeclaration | Expression;
+  test?: Expression;
+  update?: Expression;
 }
 
 declare class IfStatement extends Statement {
-  test: any;
-  consequent: any;
-  alternate: any;
+  test: Expression;
+  consequent: Statement;
+  alternate?: Statement;
 }
 
 declare class LabeledStatement extends Statement {
   label: any;
-  body: any;
+  body: Statement;
 }
 
 declare class ReturnStatement extends Statement {
-  expression: any;
+  expression?: Expression;
 }
 
 declare class SwitchStatement extends Statement {
-  discriminant: any;
-  cases: any;
+  discriminant: Expression;
+  cases: SwitchCase[];
 }
 
 declare class SwitchStatementWithDefault extends Statement {
-  discriminant: any;
-  preDefaultCases: any;
-  defaultCase: any;
-  postDefaultCases: any;
+  discriminant: Expression;
+  preDefaultCases: SwitchCase[];
+  defaultCase: SwitchDefault;
+  postDefaultCases: SwitchCase[];
 }
 
 declare class ThrowStatement extends Statement {
-  expression: any;
+  expression: Expression;
 }
 
 declare class TryCatchStatement extends Statement {
-  body: any;
-  catchClause: any;
+  body: Block;
+  catchClause: CatchClause;
 }
 
 declare class TryFinallyStatement extends Statement {
-  body: any;
-  catchClause: any;
-  finalizer: any;
+  body: Block;
+  catchClause?: CatchClause;
+  finalizer: Block;
 }
 
 declare class VariableDeclarationStatement extends Statement {
-  declaration: any;
+  declaration: VariableDeclaration;
 }
 
 declare class WithStatement extends Statement {
-  object: any;
-  body: any;
+  object: Expression;
+  body: Statement;
 }
 
-declare class WhileStatement extends Statement {
-  test: any;
-  body: any;
+declare class WhileStatement extends IterationStatement {
+  test: Expression;
 }
 
 
@@ -390,12 +385,12 @@ declare class Pragma extends Term {
 }
 
 declare class Block extends Term {
-  statements: any;
+  statements: Statement[];
 }
 
 declare class CatchClause extends Term {
-  binding: any;
-  body: any;
+  binding: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression;
+  body: Block;
 }
 
 declare class Directive extends Term {
@@ -409,20 +404,20 @@ declare class FormalParameters extends Term {
 }
 
 declare class FunctionBody extends Term {
-  directives: any;
-  statements: any;
+  directives: any[];
+  statements: Statement[];
 }
 
 declare class FunctionDeclaration extends Statement {
-  name: any;
+  name: BindingIdentifier;
   isGenerator: any;
-  params: any;
-  body: any;
+  params: FormalParameters;
+  body: FunctionBody;
 }
 
 declare class Script extends Term {
-  directives: any;
-  statements: any;
+  directives: any[];
+  statements: Statement[];
 }
 
 declare class SpreadElement extends Term {
@@ -431,12 +426,12 @@ declare class SpreadElement extends Term {
 
 declare class Super extends Term { }
 declare class SwitchCase extends Term {
-  test: any;
-  consequent: any;
+  test: Expression;
+  consequent: Statement[];
 }
 
 declare class SwitchDefault extends Term {
-  consequent: any;
+  consequent: Statement[];
 }
 
 declare class TemplateElement extends Term {
@@ -454,7 +449,7 @@ declare class SyntaxQuote extends Term {
 
 declare class VariableDeclaration extends Term {
   kind: any;
-  declarators: any;
+  declarators: VariableDeclarator[];
 }
 
 declare class VariableDeclarator extends Term {
