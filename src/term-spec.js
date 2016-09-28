@@ -39,7 +39,7 @@ declare class BindingIdentifier extends Term {
 
 declare class ArrayBinding extends Term {
   // elements: (Binding | BindingWithDefault)[];
-  elements?: (ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault)[];
+  elements: (ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault | null)[];
   // restElement?: Binding
   restElement?: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression;
 }
