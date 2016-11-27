@@ -201,6 +201,10 @@ declare class ArrowExpression extends Expression {
   params: FormalParameters;
   body: FunctionBody | Expression;
 }
+declare class ArrowExpressionE extends Expression {
+  params: FormalParameters;
+  body: Term[];
+}
 
 declare class AssignmentExpression extends Expression {
   // binding: Binding;
