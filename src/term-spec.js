@@ -8,7 +8,7 @@ declare class Term {}
 declare class SyntaxTerm extends Term {}
 declare class RawDelimiter extends SyntaxTerm {
   kind: any; // 'parens' | 'square' | 'curly'
-  inner: SyntaxTerm[];
+  inner: Term[];
 }
 declare class RawSyntax extends SyntaxTerm {
   value: any; // Syntax
