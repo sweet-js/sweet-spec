@@ -465,7 +465,7 @@ declare class TemplateElement extends Term {
   rawValue: any;
 }
 
-declare class SyntaxTemplate extends Term {
+declare class SyntaxTemplate extends Expression {
   template: any;
 }
 
