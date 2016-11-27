@@ -3,6 +3,17 @@ import { declare } from 'sweet-spec-macro';
 
 declare class Term {}
 
+/* **** SyntaxTerms **** */
+
+declare class SyntaxTerm extends Term {}
+declare class RawDelimiter extends SyntaxTerm {
+  kind: any; // 'parens' | 'square' | 'curly'
+  inner: SyntaxTerm[];
+}
+declare class RawSyntax extends SyntaxTerm {
+  value: any; // Syntax
+}
+
 /* ***** Term Kinds ***** */
 
 declare class Statement extends Term {}
@@ -230,6 +241,12 @@ declare class FunctionExpression extends Expression {
   params: FormalParameters;
   body: FunctionBody;
 }
+declare class FunctionExpressionE extends Expression {
+  name?: BindingIdentifier;
+  isGenerator: any;
+  params: FormalParameters;
+  body: Term[];
+}
 
 declare class IdentifierExpression extends Expression {
   name: any;
@@ -413,6 +430,12 @@ declare class FunctionDeclaration extends Statement {
   isGenerator: any;
   params: FormalParameters;
   body: FunctionBody;
+}
+declare class FunctionDeclarationE extends Statement {
+  name: BindingIdentifier;
+  isGenerator: any;
+  params: FormalParameters;
+  body: Term[];
 }
 
 declare class Script extends Term {
