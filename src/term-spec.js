@@ -466,7 +466,7 @@ declare class TemplateElement extends Term {
 }
 
 declare class SyntaxTemplate extends Expression {
-  template: any;
+  template: SyntaxTerm[];
 }
 
 declare class SyntaxQuote extends Term {
