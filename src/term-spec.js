@@ -95,7 +95,7 @@ declare class ClassElement extends Term {
 // modules
 declare class Module extends Term {
   directives: any[];
-  items : Statement[];
+  items : Term[];
 }
 
 declare class Import extends Term {
