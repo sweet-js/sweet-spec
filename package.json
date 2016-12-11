@@ -1,6 +1,6 @@
 {
   "name": "sweet-spec",
-  "version": "2.0.0-pre.0",
+  "version": "3.0.0-pre.0",
   "description": "The Sweet.js Term specification",
   "main": "dist/term-spec.js",
   "scripts": {
@@ -20,7 +20,7 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.14.0",
     "babel-preset-es2015-node5": "^1.2.0",
     "eslint": "^3.3.1",
-    "sweet-spec-macro": "sweet-js/sweet-spec-macro",
+    "sweet-spec-macro": "2.1.0-pre.0",
     "sweet.js": "^2.2.0"
   },
   "ava": {
