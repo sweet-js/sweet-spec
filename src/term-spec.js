@@ -287,7 +287,7 @@ declare class ThisExpression extends Expression {
 declare class UpdateExpression extends Expression {
   isPrefix: any;
   operator: any;
-  operand: BindingIdentifier;
+  operand: BindingIdentifier | MemberExpression;
 }
 
 declare class YieldExpression extends Expression {
