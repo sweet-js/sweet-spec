@@ -98,15 +98,19 @@ declare class Module extends Term {
   items : Term[];
 }
 
-declare class Import extends Term {
+declare class ImportDeclaration extends Term {
   moduleSpecifier: any;
+}
+
+declare class ExportDeclaration extends Term {}
+
+declare class Import extends ImportDeclaration {
   defaultBinding?: BindingIdentifier;
   namedImports: ImportSpecifier[];
   forSyntax: any;
 }
 
-declare class ImportNamespace extends Term {
-  moduleSpecifier: any;
+declare class ImportNamespace extends ImportDeclaration {
   defaultBinding?: BindingIdentifier;
   namespaceBinding: BindingIdentifier;
   forSyntax: any;
@@ -117,20 +121,20 @@ declare class ImportSpecifier extends Term {
   binding: BindingIdentifier;
 }
 
-declare class ExportAllFrom extends Term {
+declare class ExportAllFrom extends ExportDeclaration {
   moduleSpecifier: any;
 }
 
-declare class ExportFrom extends Term {
+declare class ExportFrom extends ExportDeclaration {
   namedExports: ExportSpecifier[];
   moduleSpecifier?: any;
 }
 
-declare class Export extends Term {
+declare class Export extends ExportDeclaration {
   declaration: FunctionDeclaration | ClassDeclaration | VariableDeclaration;
 }
 
-declare class ExportDefault extends Term {
+declare class ExportDefault extends ExportDeclaration {
   body: FunctionDeclaration | ClassDeclaration | Expression;
 }
 
