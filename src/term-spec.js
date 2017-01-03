@@ -100,6 +100,7 @@ declare class Module extends Term {
 
 declare class ImportDeclaration extends Term {
   moduleSpecifier: any;
+  forSyntax: any;
 }
 
 declare class ExportDeclaration extends Term {}
@@ -107,13 +108,11 @@ declare class ExportDeclaration extends Term {}
 declare class Import extends ImportDeclaration {
   defaultBinding?: BindingIdentifier;
   namedImports: ImportSpecifier[];
-  forSyntax: any;
 }
 
 declare class ImportNamespace extends ImportDeclaration {
   defaultBinding?: BindingIdentifier;
   namespaceBinding: BindingIdentifier;
-  forSyntax: any;
 }
 
 declare class ImportSpecifier extends Term {
