@@ -226,6 +226,11 @@ declare class CallExpression extends Expression {
   arguments: (SpreadElement | Expression)[];
 }
 
+declare class CallExpressionE extends Expression {
+  callee: Expression | Super;
+  arguments: Term[];
+}
+
 declare class CompoundAssignmentExpression extends Expression {
   binding: BindingIdentifier | MemberExpression;
   operator: any;
