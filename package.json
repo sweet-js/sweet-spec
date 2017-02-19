@@ -1,6 +1,6 @@
 {
   "name": "sweet-spec",
-  "version": "3.0.0-pre.3",
+  "version": "3.0.0",
   "description": "The Sweet.js Term specification",
   "main": "dist/term-spec.js",
   "scripts": {
