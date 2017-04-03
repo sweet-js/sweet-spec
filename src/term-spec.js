@@ -72,7 +72,6 @@ declare class BindingPropertyProperty extends BindingProperty {
   binding: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault;
 }
 
-
 // class
 declare class ClassExpression extends Expression {
   name?: BindingIdentifier;
@@ -491,4 +490,9 @@ declare class VariableDeclarator extends Term {
   binding: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression;
   // binding: Binding;
   init?: Expression;
+}
+
+declare class OperatorDeclarator extends VariableDeclarator {
+  prec: any;
+  assoc: any;
 }
