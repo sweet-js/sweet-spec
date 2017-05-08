@@ -1,37 +1,37 @@
 #lang 'sweet.js';
 import { declare } from 'sweet-spec-macro';
 
-declare class Term {}
+declare export default class Term {}
 
 /* **** SyntaxTerms **** */
 
-declare class SyntaxTerm extends Term {}
-declare class RawDelimiter extends SyntaxTerm {
+declare export class SyntaxTerm extends Term {}
+declare export class RawDelimiter extends SyntaxTerm {
   kind: any; // 'parens' | 'square' | 'curly'
   inner: Term[];
 }
-declare class RawSyntax extends SyntaxTerm {
+declare export class RawSyntax extends SyntaxTerm {
   value: any; // Syntax
 }
 
 /* ***** Term Kinds ***** */
 
-declare class Statement extends Term {}
-declare class IterationStatement extends Statement {
+declare export class Statement extends Term {}
+declare export class IterationStatement extends Statement {
   body: Statement;
 }
 
-declare class Expression extends Term {}
-declare class MemberExpression extends Expression {
+declare export class Expression extends Term {}
+declare export class MemberExpression extends Expression {
   object: Expression | Super;
 }
 
-declare class PropertyName extends Term {}
-declare class ObjectProperty extends Term {}
-declare class NamedObjectProperty extends ObjectProperty {
+declare export class PropertyName extends Term {}
+declare export class ObjectProperty extends Term {}
+declare export class NamedObjectProperty extends ObjectProperty {
   name: PropertyName;
 }
-declare class MethodDefinition extends NamedObjectProperty {
+declare export class MethodDefinition extends NamedObjectProperty {
   body: FunctionBody;
 }
 
@@ -39,460 +39,460 @@ declare class MethodDefinition extends NamedObjectProperty {
 
 // type Binding = (ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression);
 
-declare class BindingWithDefault extends Term {
+declare export class BindingWithDefault extends Term {
   binding: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression;
   init: Expression;
 }
 
-declare class BindingIdentifier extends Term {
+declare export class BindingIdentifier extends Term {
   name: any;
 }
 
-declare class ArrayBinding extends Term {
+declare export class ArrayBinding extends Term {
   // elements: (Binding | BindingWithDefault)[];
   elements: (ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault | null)[];
   // restElement?: Binding
   restElement?: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression;
 }
 
-declare class ObjectBinding extends Term {
+declare export class ObjectBinding extends Term {
   properties: BindingProperty[];
 }
 
-declare class BindingProperty extends Term {}
+declare export class BindingProperty extends Term {}
 
-declare class BindingPropertyIdentifier extends BindingProperty {
+declare export class BindingPropertyIdentifier extends BindingProperty {
   binding: BindingIdentifier;
   init?: Expression;
 }
 
-declare class BindingPropertyProperty extends BindingProperty {
+declare export class BindingPropertyProperty extends BindingProperty {
   name: PropertyName;
   // binding: Binding | BindingWithDefault;
   binding: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault;
 }
 
 // class
-declare class ClassExpression extends Expression {
+declare export class ClassExpression extends Expression {
   name?: BindingIdentifier;
   super?: Expression;
   elements: ClassElement[];
 }
 
-declare class ClassDeclaration extends Statement {
+declare export class ClassDeclaration extends Statement {
   name: BindingIdentifier;
   super?: Expression;
   elements: ClassElement[];
 }
 
-declare class ClassElement extends Term {
+declare export class ClassElement extends Term {
   isStatic: any;
   method: MethodDefinition;
 }
 
 
 // modules
-declare class Module extends Term {
+declare export class Module extends Term {
   directives: any[];
   items : Term[];
 }
 
-declare class ImportDeclaration extends Term {
+declare export class ImportDeclaration extends Term {
   moduleSpecifier: any;
   forSyntax: any;
 }
 
-declare class ExportDeclaration extends Term {}
+declare export class ExportDeclaration extends Term {}
 
-declare class Import extends ImportDeclaration {
+declare export class Import extends ImportDeclaration {
   defaultBinding?: BindingIdentifier;
   namedImports: ImportSpecifier[];
 }
 
-declare class ImportNamespace extends ImportDeclaration {
+declare export class ImportNamespace extends ImportDeclaration {
   defaultBinding?: BindingIdentifier;
   namespaceBinding: BindingIdentifier;
 }
 
-declare class ImportSpecifier extends Term {
+declare export class ImportSpecifier extends Term {
   name?: any;
   binding: BindingIdentifier;
 }
 
-declare class ExportAllFrom extends ExportDeclaration {
+declare export class ExportAllFrom extends ExportDeclaration {
   moduleSpecifier: any;
 }
 
-declare class ExportFrom extends ExportDeclaration {
+declare export class ExportFrom extends ExportDeclaration {
   namedExports: ExportSpecifier[];
   moduleSpecifier?: any;
 }
 
-declare class Export extends ExportDeclaration {
+declare export class Export extends ExportDeclaration {
   declaration: FunctionDeclaration | ClassDeclaration | VariableDeclaration;
 }
 
-declare class ExportDefault extends ExportDeclaration {
+declare export class ExportDefault extends ExportDeclaration {
   body: FunctionDeclaration | ClassDeclaration | Expression;
 }
 
-declare class ExportSpecifier extends Term {
+declare export class ExportSpecifier extends Term {
   name?: any;
   exportedName: any;
 }
 
 
 // property definition
-declare class Method extends MethodDefinition {
+declare export class Method extends MethodDefinition {
   isGenerator: any;
   params: FormalParameters;
 }
 
-declare class Getter extends MethodDefinition { }
+declare export class Getter extends MethodDefinition { }
 
-declare class Setter extends MethodDefinition {
+declare export class Setter extends MethodDefinition {
   param: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault;
   // param: Binding or BindingWithDefault;
 }
 
-declare class DataProperty extends NamedObjectProperty {
+declare export class DataProperty extends NamedObjectProperty {
   expression: Expression;
 }
 
-declare class ShorthandProperty extends ObjectProperty {
+declare export class ShorthandProperty extends ObjectProperty {
   name: any;
 }
 
-declare class StaticPropertyName extends PropertyName {
+declare export class StaticPropertyName extends PropertyName {
   value: any;
 }
 
-declare class ComputedPropertyName extends PropertyName {
+declare export class ComputedPropertyName extends PropertyName {
   expression: Expression;
 }
 
 
 // literals
-declare class LiteralBooleanExpression extends Expression {
+declare export class LiteralBooleanExpression extends Expression {
   value: any;
 }
 
-declare class LiteralInfinityExpression extends Expression { }
-declare class LiteralNullExpression extends Expression { }
-declare class LiteralNumericExpression extends Expression {
+declare export class LiteralInfinityExpression extends Expression { }
+declare export class LiteralNullExpression extends Expression { }
+declare export class LiteralNumericExpression extends Expression {
   value: any;
 }
 
-declare class LiteralRegExpExpression extends Expression {
+declare export class LiteralRegExpExpression extends Expression {
   pattern: any;
   flags: any;
 }
 
-declare class LiteralStringExpression extends Expression {
+declare export class LiteralStringExpression extends Expression {
   value: any;
 }
 
 
 
 // expressions
-declare class ArrayExpression extends Expression {
+declare export class ArrayExpression extends Expression {
   elements: (SpreadElement | Expression | null)[];
 }
 
-declare class ArrowExpression extends Expression {
+declare export class ArrowExpression extends Expression {
   params: FormalParameters;
   body: FunctionBody | Expression;
 }
-declare class ArrowExpressionE extends Expression {
+declare export class ArrowExpressionE extends Expression {
   params: FormalParameters;
   body: Term[];
 }
 
-declare class AssignmentExpression extends Expression {
+declare export class AssignmentExpression extends Expression {
   // binding: Binding;
   binding: BindingIdentifier | BindingPropertyProperty | BindingPropertyIdentifier | ObjectBinding | ArrayBinding | MemberExpression;
   expression: Expression;
 }
 
-declare class BinaryExpression extends Expression {
+declare export class BinaryExpression extends Expression {
   operator: any;
   left: Expression;
   right: Expression;
 }
 
-declare class CallExpression extends Expression {
+declare export class CallExpression extends Expression {
   callee: Expression | Super;
   arguments: (SpreadElement | Expression)[];
 }
 
-declare class CallExpressionE extends Expression {
+declare export class CallExpressionE extends Expression {
   callee: Expression | Super;
   arguments: Term[];
 }
 
-declare class CompoundAssignmentExpression extends Expression {
+declare export class CompoundAssignmentExpression extends Expression {
   binding: BindingIdentifier | MemberExpression;
   operator: any;
   expression: Expression;
 }
 
-declare class ComputedMemberExpression extends MemberExpression {
+declare export class ComputedMemberExpression extends MemberExpression {
   expression: Expression;
 }
 
-declare class ConditionalExpression extends Expression {
+declare export class ConditionalExpression extends Expression {
   test: Expression;
   consequent: Expression;
   alternate: Expression;
 }
 
-declare class FunctionExpression extends Expression {
+declare export class FunctionExpression extends Expression {
   name?: BindingIdentifier;
   isGenerator: any;
   params: FormalParameters;
   body: FunctionBody;
 }
-declare class FunctionExpressionE extends Expression {
+declare export class FunctionExpressionE extends Expression {
   name?: BindingIdentifier;
   isGenerator: any;
   params: FormalParameters;
   body: Term[];
 }
 
-declare class IdentifierExpression extends Expression {
+declare export class IdentifierExpression extends Expression {
   name: any;
 }
 
-declare class NewExpression extends Expression {
+declare export class NewExpression extends Expression {
   callee: Expression;
   arguments: (SpreadElement | Expression)[];
 }
 
-declare class NewTargetExpression extends Expression { }
-declare class ObjectExpression extends Expression {
+declare export class NewTargetExpression extends Expression { }
+declare export class ObjectExpression extends Expression {
   properties: ObjectProperty[];
 }
 
-declare class UnaryExpression extends Expression {
+declare export class UnaryExpression extends Expression {
   operator: any;
   operand: Expression;
 }
 
-declare class StaticMemberExpression extends MemberExpression {
+declare export class StaticMemberExpression extends MemberExpression {
   property: any;
 }
 
-declare class TemplateExpression extends Expression {
+declare export class TemplateExpression extends Expression {
   tag?: Expression;
   elements: (Expression | TemplateElement)[];
 }
 
-declare class ThisExpression extends Expression {
+declare export class ThisExpression extends Expression {
   stx: any
 }
 
-declare class UpdateExpression extends Expression {
+declare export class UpdateExpression extends Expression {
   isPrefix: any;
   operator: any;
   operand: BindingIdentifier | MemberExpression;
 }
 
-declare class YieldExpression extends Expression {
+declare export class YieldExpression extends Expression {
   expression?: Expression;
 }
 
-declare class YieldGeneratorExpression extends Expression {
+declare export class YieldGeneratorExpression extends Expression {
   expression: Expression;
 }
 
-declare class ParenthesizedExpression extends Expression {
+declare export class ParenthesizedExpression extends Expression {
   inner: any;
 }
 
 
 // statements
-declare class BlockStatement extends Statement {
+declare export class BlockStatement extends Statement {
   block: Block;
 }
 
-declare class BreakStatement extends Statement {
+declare export class BreakStatement extends Statement {
   label?: any;
 }
 
-declare class ContinueStatement extends Statement {
+declare export class ContinueStatement extends Statement {
   label?: any;
 }
 
 
-declare class DebuggerStatement extends Statement { }
-declare class DoWhileStatement extends IterationStatement {
+declare export class DebuggerStatement extends Statement { }
+declare export class DoWhileStatement extends IterationStatement {
   test: Expression;
 }
 
-declare class EmptyStatement extends Statement { }
-declare class ExpressionStatement extends Statement {
+declare export class EmptyStatement extends Statement { }
+declare export class ExpressionStatement extends Statement {
   expression : Expression;
 }
 
-declare class ForInStatement extends IterationStatement {
+declare export class ForInStatement extends IterationStatement {
   left: VariableDeclaration | ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression;
   right: Expression;
 }
 
-declare class ForOfStatement extends IterationStatement {
+declare export class ForOfStatement extends IterationStatement {
   left: VariableDeclaration | ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression;
   right: Expression;
 }
 
-declare class ForStatement extends IterationStatement {
+declare export class ForStatement extends IterationStatement {
   init?: VariableDeclaration | Expression;
   test?: Expression;
   update?: Expression;
 }
 
-declare class IfStatement extends Statement {
+declare export class IfStatement extends Statement {
   test: Expression;
   consequent: Statement;
   alternate?: Statement;
 }
 
-declare class LabeledStatement extends Statement {
+declare export class LabeledStatement extends Statement {
   label: any;
   body: Statement;
 }
 
-declare class ReturnStatement extends Statement {
+declare export class ReturnStatement extends Statement {
   expression?: Expression;
 }
 
-declare class SwitchStatement extends Statement {
+declare export class SwitchStatement extends Statement {
   discriminant: Expression;
   cases: SwitchCase[];
 }
 
-declare class SwitchStatementWithDefault extends Statement {
+declare export class SwitchStatementWithDefault extends Statement {
   discriminant: Expression;
   preDefaultCases: SwitchCase[];
   defaultCase: SwitchDefault;
   postDefaultCases: SwitchCase[];
 }
 
-declare class ThrowStatement extends Statement {
+declare export class ThrowStatement extends Statement {
   expression: Expression;
 }
 
-declare class TryCatchStatement extends Statement {
+declare export class TryCatchStatement extends Statement {
   body: Block;
   catchClause: CatchClause;
 }
 
-declare class TryFinallyStatement extends Statement {
+declare export class TryFinallyStatement extends Statement {
   body: Block;
   catchClause?: CatchClause;
   finalizer: Block;
 }
 
-declare class VariableDeclarationStatement extends Statement {
+declare export class VariableDeclarationStatement extends Statement {
   declaration: VariableDeclaration;
 }
 
-declare class WithStatement extends Statement {
+declare export class WithStatement extends Statement {
   object: Expression;
   body: Statement;
 }
 
-declare class WhileStatement extends IterationStatement {
+declare export class WhileStatement extends IterationStatement {
   test: Expression;
 }
 
 
 // other
-declare class Pragma extends Term {
+declare export class Pragma extends Term {
   kind: any;
   items: any;
 }
 
-declare class Block extends Term {
+declare export class Block extends Term {
   statements: Statement[];
 }
 
-declare class CatchClause extends Term {
+declare export class CatchClause extends Term {
   binding: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression;
   body: Block;
 }
 
-declare class Directive extends Term {
+declare export class Directive extends Term {
   rawValue: any;
 }
 
-declare class FormalParameters extends Term {
+declare export class FormalParameters extends Term {
   // items: (Binding | BindingWithDefault)[];
   items: (ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault)[];
   rest?: BindingIdentifier;
 }
 
-declare class FunctionBody extends Term {
+declare export class FunctionBody extends Term {
   directives: any[];
   statements: Statement[];
 }
 
-declare class FunctionDeclaration extends Statement {
+declare export class FunctionDeclaration extends Statement {
   name: BindingIdentifier;
   isGenerator: any;
   params: FormalParameters;
   body: FunctionBody;
 }
-declare class FunctionDeclarationE extends Statement {
+declare export class FunctionDeclarationE extends Statement {
   name: BindingIdentifier;
   isGenerator: any;
   params: FormalParameters;
   body: Term[];
 }
 
-declare class Script extends Term {
+declare export class Script extends Term {
   directives: any[];
   statements: Statement[];
 }
 
-declare class SpreadElement extends Term {
+declare export class SpreadElement extends Term {
   expression: Expression;
 }
 
-declare class Super extends Term { }
-declare class SwitchCase extends Term {
+declare export class Super extends Term { }
+declare export class SwitchCase extends Term {
   test: Expression;
   consequent: Statement[];
 }
 
-declare class SwitchDefault extends Term {
+declare export class SwitchDefault extends Term {
   consequent: Statement[];
 }
 
-declare class TemplateElement extends Term {
+declare export class TemplateElement extends Term {
   rawValue: any;
 }
 
-declare class SyntaxTemplate extends Expression {
+declare export class SyntaxTemplate extends Expression {
   template: SyntaxTerm[];
 }
 
-declare class SyntaxQuote extends Term {
+declare export class SyntaxQuote extends Term {
   name: any;
   template: any;
 }
 
-declare class VariableDeclaration extends Term {
+declare export class VariableDeclaration extends Term {
   kind: any;
   declarators: VariableDeclarator[];
 }
 
-declare class VariableDeclarator extends Term {
+declare export class VariableDeclarator extends Term {
   binding: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression;
   // binding: Binding;
   init?: Expression;
 }
 
-declare class OperatorDeclarator extends VariableDeclarator {
+declare export class OperatorDeclarator extends VariableDeclarator {
   prec: any;
   assoc: any;
 }
