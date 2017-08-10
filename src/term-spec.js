@@ -195,7 +195,11 @@ declare export class LiteralNumericExpression extends Expression {
 
 declare export class LiteralRegExpExpression extends Expression {
   pattern: any;
-  flags: any;
+  global: any;
+  ignoreCase: any;
+  multiline: any;
+  sticky: any;
+  unicode: any;
 }
 
 declare export class LiteralStringExpression extends Expression {
