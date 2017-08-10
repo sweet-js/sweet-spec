@@ -124,8 +124,12 @@ declare export class ExportAllFrom extends ExportDeclaration {
 }
 
 declare export class ExportFrom extends ExportDeclaration {
-  namedExports: ExportSpecifier[];
+  namedExports: ExportFromSpecifier[];
   moduleSpecifier?: any;
+}
+
+declare export class ExportLocals extends ExportDeclaration {
+  namedExports: ExportLocalSpecifier[];
 }
 
 declare export class Export extends ExportDeclaration {
@@ -136,9 +140,14 @@ declare export class ExportDefault extends ExportDeclaration {
   body: FunctionDeclaration | ClassDeclaration | Expression;
 }
 
-declare export class ExportSpecifier extends Term {
-  name?: any;
-  exportedName: any;
+declare export class ExportFromSpecifier extends Term {
+  name: any;
+  exportedName?: any;
+}
+
+declare export class ExportLocalSpecifier extends Term {
+  name: IdentifierExpression;
+  exportedName?: any;
 }
 
 
