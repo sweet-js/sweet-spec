@@ -170,7 +170,7 @@ declare export class DataProperty extends NamedObjectProperty {
 }
 
 declare export class ShorthandProperty extends ObjectProperty {
-  name: any;
+  name: IdentifierExpression;
 }
 
 declare export class StaticPropertyName extends PropertyName {
