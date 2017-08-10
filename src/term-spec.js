@@ -52,7 +52,7 @@ declare export class ArrayBinding extends Term {
   // elements: (Binding | BindingWithDefault)[];
   elements: (ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault | null)[];
   // restElement?: Binding
-  restElement?: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression;
+  rest?: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression;
 }
 
 declare export class ObjectBinding extends Term {
