@@ -144,6 +144,7 @@ declare export class ExportSpecifier extends Term {
 
 // property definition
 declare export class Method extends MethodDefinition {
+  isAsync: any;
   isGenerator: any;
   params: FormalParameters;
 }
@@ -200,10 +201,12 @@ declare export class ArrayExpression extends Expression {
 }
 
 declare export class ArrowExpression extends Expression {
+  isAsync: any;
   params: FormalParameters;
   body: FunctionBody | Expression;
 }
 declare export class ArrowExpressionE extends Expression {
+  isAsync: any;
   params: FormalParameters;
   body: Term[];
 }
@@ -248,12 +251,14 @@ declare export class ConditionalExpression extends Expression {
 
 declare export class FunctionExpression extends Expression {
   name?: BindingIdentifier;
+  isAsync: any; // boolean
   isGenerator: any;
   params: FormalParameters;
   body: FunctionBody;
 }
 declare export class FunctionExpressionE extends Expression {
   name?: BindingIdentifier;
+  isAsync: any; // boolean
   isGenerator: any;
   params: FormalParameters;
   body: Term[];
@@ -302,6 +307,10 @@ declare export class YieldExpression extends Expression {
 }
 
 declare export class YieldGeneratorExpression extends Expression {
+  expression: Expression;
+}
+
+declare export class AwaitExpression extends Expression {
   expression: Expression;
 }
 
@@ -438,12 +447,14 @@ declare export class FunctionBody extends Term {
 
 declare export class FunctionDeclaration extends Statement {
   name: BindingIdentifier;
+  isAsync: any; // boolean
   isGenerator: any;
   params: FormalParameters;
   body: FunctionBody;
 }
 declare export class FunctionDeclarationE extends Statement {
   name: BindingIdentifier;
+  isAsync: any; // boolean
   isGenerator: any;
   params: FormalParameters;
   body: Term[];
