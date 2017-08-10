@@ -35,6 +35,10 @@ declare export class MethodDefinition extends NamedObjectProperty {
   body: FunctionBody;
 }
 
+declare export class VariableReference extends Term {
+  name: any; // Identifier (string)
+}
+
 /* ***** Bindings ***** */
 
 // type Binding = (ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression);
@@ -44,8 +48,20 @@ declare export class BindingWithDefault extends Term {
   init: Expression;
 }
 
-declare export class BindingIdentifier extends Term {
-  name: any;
+declare export class BindingIdentifier extends VariableReference { }
+
+declare export class AssignmentTargetIdentifier extends VariableReference { }
+
+declare export class MemberAssignmentTarget extends Term { 
+  object: Expression | Super;
+}
+
+declare export class ComputedMemberAssignmentTarget extends MemberAssignmentTarget { 
+  expression: Expression;
+}
+
+declare export class StaticMemberAssignmentTarget extends MemberAssignmentTarget { 
+  property: any;
 }
 
 declare export class ArrayBinding extends Term {
@@ -71,6 +87,43 @@ declare export class BindingPropertyProperty extends BindingProperty {
   // binding: Binding | BindingWithDefault;
   binding: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault;
 }
+
+/*
+  AssignmentTarget = 
+      ObjectAssignmentTarget 
+    | ArrayAssignmentTarget
+    | AssignmentTargetIdentifier
+    | MemberAssignmentTarget
+*/
+
+declare export class AssignmentTargetWithDefault extends Term {
+  binding: ObjectAssignmentTarget | ArrayAssignmentTarget | AssignmentTargetIdentifier | MemberAssignmentTarget;
+  init: Expression;
+}
+
+
+declare export class ArrayAssignmentTarget extends Term {
+  elements?: (ObjectAssignmentTarget | ArrayAssignmentTarget | AssignmentTargetIdentifier | MemberAssignmentTarget | AssignmentTargetWithDefault)[];
+  rest?: ObjectAssignmentTarget | ArrayAssignmentTarget | AssignmentTargetIdentifier | MemberAssignmentTarget;
+}
+
+declare export class ObjectAssignmentTarget extends Term {
+  properties?: AssignmentTargetProperty[];
+}
+
+declare export class AssignmentTargetProperty extends Term { }
+
+declare export class AssignmentTargetPropertyIdentifier extends AssignmentTargetProperty { 
+  binding: AssignmentTargetIdentifier;
+  init?: Expression;
+}
+
+declare export class AssignmentTargetPropertyProperty extends AssignmentTargetProperty { 
+  name: PropertyName;
+  init?: Expression;
+}
+
+
 
 // class
 declare export class ClassExpression extends Expression {
@@ -226,7 +279,7 @@ declare export class ArrowExpressionE extends Expression {
 
 declare export class AssignmentExpression extends Expression {
   // binding: Binding;
-  binding: BindingIdentifier | BindingPropertyProperty | BindingPropertyIdentifier | ObjectBinding | ArrayBinding | MemberExpression;
+  binding: ObjectAssignmentTarget | ArrayAssignmentTarget | AssignmentTargetIdentifier | MemberAssignmentTarget;
   expression: Expression;
 }
 
@@ -247,7 +300,7 @@ declare export class CallExpressionE extends Expression {
 }
 
 declare export class CompoundAssignmentExpression extends Expression {
-  binding: BindingIdentifier | MemberExpression;
+  binding: AssignmentTargetIdentifier | MemberAssignmentTarget;
   operator: any;
   expression: Expression;
 }
@@ -312,7 +365,7 @@ declare export class ThisExpression extends Expression {
 declare export class UpdateExpression extends Expression {
   isPrefix: any;
   operator: any;
-  operand: BindingIdentifier | MemberExpression;
+  operand: AssignmentTargetIdentifier | MemberAssignmentTarget;
 }
 
 declare export class YieldExpression extends Expression {
@@ -362,7 +415,7 @@ declare export class ForInStatement extends IterationStatement {
 }
 
 declare export class ForOfStatement extends IterationStatement {
-  left: VariableDeclaration | ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression;
+  left: VariableDeclaration | ObjectAssignmentTarget | ArrayAssignmentTarget | AssignmentTargetIdentifier | MemberAssignmentTarget;
   right: Expression;
 }
 
