@@ -103,7 +103,7 @@ declare export class AssignmentTargetWithDefault extends Term {
 
 
 declare export class ArrayAssignmentTarget extends Term {
-  elements?: (ObjectAssignmentTarget | ArrayAssignmentTarget | AssignmentTargetIdentifier | MemberAssignmentTarget | AssignmentTargetWithDefault)[];
+  elements: (ObjectAssignmentTarget | ArrayAssignmentTarget | AssignmentTargetIdentifier | MemberAssignmentTarget | AssignmentTargetWithDefault | null)[];
   rest?: ObjectAssignmentTarget | ArrayAssignmentTarget | AssignmentTargetIdentifier | MemberAssignmentTarget;
 }
 
@@ -120,7 +120,7 @@ declare export class AssignmentTargetPropertyIdentifier extends AssignmentTarget
 
 declare export class AssignmentTargetPropertyProperty extends AssignmentTargetProperty { 
   name: PropertyName;
-  init?: Expression;
+  binding?: ObjectAssignmentTarget | ArrayAssignmentTarget | AssignmentTargetIdentifier | MemberAssignmentTarget | AssignmentTargetWithDefault;
 }
 
 
