@@ -52,15 +52,15 @@ declare export class BindingIdentifier extends VariableReference { }
 
 declare export class AssignmentTargetIdentifier extends VariableReference { }
 
-declare export class MemberAssignmentTarget extends Term { 
+declare export class MemberAssignmentTarget extends Term {
   object: Expression | Super;
 }
 
-declare export class ComputedMemberAssignmentTarget extends MemberAssignmentTarget { 
+declare export class ComputedMemberAssignmentTarget extends MemberAssignmentTarget {
   expression: Expression;
 }
 
-declare export class StaticMemberAssignmentTarget extends MemberAssignmentTarget { 
+declare export class StaticMemberAssignmentTarget extends MemberAssignmentTarget {
   property: any;
 }
 
@@ -89,8 +89,8 @@ declare export class BindingPropertyProperty extends BindingProperty {
 }
 
 /*
-  AssignmentTarget = 
-      ObjectAssignmentTarget 
+  AssignmentTarget =
+      ObjectAssignmentTarget
     | ArrayAssignmentTarget
     | AssignmentTargetIdentifier
     | MemberAssignmentTarget
@@ -113,12 +113,12 @@ declare export class ObjectAssignmentTarget extends Term {
 
 declare export class AssignmentTargetProperty extends Term { }
 
-declare export class AssignmentTargetPropertyIdentifier extends AssignmentTargetProperty { 
+declare export class AssignmentTargetPropertyIdentifier extends AssignmentTargetProperty {
   binding: AssignmentTargetIdentifier;
   init?: Expression;
 }
 
-declare export class AssignmentTargetPropertyProperty extends AssignmentTargetProperty { 
+declare export class AssignmentTargetPropertyProperty extends AssignmentTargetProperty {
   name: PropertyName;
   binding?: ObjectAssignmentTarget | ArrayAssignmentTarget | AssignmentTargetIdentifier | MemberAssignmentTarget | AssignmentTargetWithDefault;
 }
@@ -572,4 +572,132 @@ declare export class VariableDeclarator extends Term {
 declare export class OperatorDeclarator extends VariableDeclarator {
   prec: any;
   assoc: any;
+}
+
+declare export class TypeNode extends Term {}
+
+// FIXME add actual definition
+declare export class TypeParameterDeclaration extends Term {}
+
+// FIXME add actual definition
+declare export class ParameterDeclaration extends Term {}
+
+// Note: TypeScript also has a separate ThisTypeNode interface that is
+//       not reflected here
+declare export class KeywordTypeNode extends TypeNode {
+  kind: any; // 'any' | 'number' | 'object' | 'boolean' | 'string' | 'symbol' |
+             // 'this' | 'void' | 'undefined' | 'null' | 'never'
+}
+
+// type FunctionOrConstructorTypeNode = FunctionTypeNode | ConstructorTypeNode
+declare export class SignatureTypeNode extends TypeNode {
+  typeParameters?: TypeParameterDeclaration[];
+  parameters: ParameterDeclaration[];
+  type?: TypeNode;
+}
+// example: `(i: number, s: string) => boolean`
+declare export class FunctionTypeNode extends SignatureTypeNode {}
+// example: `new (i: number, s: string) => SomeClass`
+declare export class ConstructorNodeType extends SignatureTypeNode {}
+
+// type TypeReferenceType = TypeReferenceNode | ExpressionWithTypeArguments;
+
+declare export class TypeReferenceNode extends TypeNode {
+  typeName: any; // Identifier
+  typeArguments?: TypeNode[];
+}
+
+// FIXME add actual definition
+declare export class HeritageClause extends Term {}
+
+// example: `SomeMapWithGenericClassValues["key"]<number, string>`
+declare export class ExpressionWithTypeArguments extends TypeNode {
+  parent?: HeritageClause;
+  /*
+   * In TypeScript, the "destination" class/interface of a heritage clause is
+   * allowed to be an arbitrary `LeftHandSideExpression`` which would perhaps
+   * best translate into `AssignmentTarget`. However, in the original version
+   * of this spec, the superclass is an arbitrary Expression, so here we retain
+   * that permissiveness.
+   */
+  expression: Expression;
+  typeArguments?: TypeNode[];
+}
+
+// example 1:
+//   `something is string` in a boolean-returning function declared as
+//   `function isString(something: any): something is string`
+// example 2:
+//   `this is string` in a boolean-returning class method declared as
+//   `isString(): this is string`
+declare export class TypePredicateNode extends TypeNode {
+  parameterName: any; //  Identifier | 'this'
+  type: TypeNode;
+}
+
+// example: `typeof someVariable`
+declare export class TypeQueryNode extends TypeNode {
+  exprName: any; // Identifier
+}
+
+// example: `{ readonly someKey: number }`
+declare export class TypeLiteralNode extends TypeNode {
+  members: TypeElement[];
+}
+
+// example: `string[]`
+declare export class ArrayTypeNode extends TypeNode {
+  elementType: TypeNode;
+}
+
+// example: `[string, number]`
+declare export class TupleTypeNode extends TypeNode {
+  elementTypes: TypeNode[];
+}
+
+// example: `number | string`
+declare export class UnionTypeNode extends TypeNode {
+  types: TypeNode[];
+}
+
+// example: `number & string`
+declare export class IntersectionTypeNode extends TypeNode {
+  types: TypeNode[];
+}
+
+// example: `(number)`
+declare export class ParenthesizedTypeNode extends TypeNode {
+  type: TypeNode;
+}
+
+// example: `keyof { a: number, b: string }`
+declare export class TypeOperatorNode extends TypeNode {
+  operator: any; // 'keyof'
+  type: TypeNode;
+}
+
+// example:
+//   `SomeClass[number]`
+//   where
+//   `class SomeClass { [index: number]: string }`
+declare export class IndexedAccessTypeNode extends TypeNode {
+  objectType: TypeNode;
+  indexType: TypeNode;
+}
+
+// FIXME add actual definition
+declare export class TypeAliasDeclaration extends Term {}
+
+// example: `{ readonly [K in "some" | "permissible" | "keys"]: string }`
+declare export class MappedTypeNode extends TypeNode {
+  parent?: TypeAliasDeclaration;
+  hasReadonlyToken: any; // boolean
+  typeParameter: TypeParameterDeclaration;
+  hasQuestionToken: any; // boolean
+  type?: TypeNode;
+}
+
+// examples: `"someValue"`, `42`, `null`, `false`
+declare export class LiteralTypeNode extends TypeNode {
+  literal: Expression;
 }
