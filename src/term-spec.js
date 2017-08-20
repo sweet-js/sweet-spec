@@ -130,7 +130,7 @@ declare export class ClassExpression extends Expression {
   name?: BindingIdentifier;
   typeParameters?: TypeParameterDeclaration[];
   heritageClauses?: HeritageClause[];
-  elements: ClassElement[];
+  elements: (ClassElement | IndexSignatureDeclaration)[];
 }
 
 declare export class ClassDeclaration extends Statement {
@@ -138,7 +138,7 @@ declare export class ClassDeclaration extends Statement {
   name: BindingIdentifier;
   typeParameters?: TypeParameterDeclaration[];
   heritageClauses?: HeritageClause[];
-  elements: ClassElement[];
+  elements: (ClassElement | IndexSignatureDeclaration)[];
 }
 
 declare export class ClassElement extends Term {
@@ -181,8 +181,40 @@ declare export class PropertyDeclaration extends ClassElement {
 
 // interface
 
-// FIXME add real definition
-declare export class InterfaceDeclaration extends Statement {}
+declare export class InterfaceDeclaration extends Statement {
+  name: BindingIdentifier;
+  typeParameters?: TypeParameterDeclaration[];
+  heritageClauses?: HeritageClause[];
+  elements: (TypeElement | IndexSignatureDeclaration)[];
+}
+
+declare export class TypeElement extends Term {}
+
+declare export class FunctionSignatureLikeTypeElement extends TypeElement {
+  typeParameters?: TypeParameterDeclaration[];
+  params: FormalParameters;
+  type?: TypeNode;
+}
+
+declare export class MethodSignature extends FunctionSignatureLikeTypeElement {
+  name: PropertyName;
+}
+
+declare export class CallSignatureDeclaration extends FunctionSignatureLikeTypeElement {}
+
+declare export class ConstructorSignatureDeclaration extends FunctionSignatureLikeTypeElement {
+  // note: TypeScript does not allow ConstructorFormalParameters here
+}
+
+declare export class PropertySignature extends TypeElement {
+  name: PropertyName;
+  hasQuestionToken: any; // boolean
+  type?: TypeNode;
+}
+
+
+
+// common for classes and interfaces
 
 declare export class HeritageClause extends Term {
   parent?: InterfaceDeclaration | ClassExpression | ClassDeclaration;
@@ -191,10 +223,19 @@ declare export class HeritageClause extends Term {
 declare export class ExtendsClause extends HeritageClause {}
 declare export class ImplementsClause extends HeritageClause {}
 
+declare export class IndexSignatureDeclaration extends Term {
+  parameter: ParameterDeclaration;
+  valueType: TypeNode;
+}
+
+
+
 // type alias
 
 // FIXME add real definition
-declare export class TypeAlias extends Statement {}
+declare export class TypeAliasDeclaration extends Statement {}
+
+
 
 // modules
 declare export class Module extends Term {
@@ -649,14 +690,18 @@ declare export class OperatorDeclarator extends VariableDeclarator {
   assoc: any;
 }
 
-declare export class TypeNode extends Term {}
+
+
+// type annotations
 
 declare export class TypeParameterDeclaration extends Term {
-  parent?: ClassExpression | ClassDeclaration | InterfaceDeclaration | TypeAlias | ArrowExpression | FunctionDeclaration | SignatureTypeNode | MappedTypeNode;
+  parent?: ClassExpression | ClassDeclaration | InterfaceDeclaration | TypeAliasDeclaration | ArrowExpression | FunctionDeclaration | SignatureTypeNode | MappedTypeNode;
   name: any; // Identifier
   constraint?: TypeNode;
   default?: TypeNode;
 }
+
+declare export class TypeNode extends Term {}
 
 // Note: TypeScript also has a separate ThisTypeNode interface that is
 //       not reflected here
@@ -715,7 +760,7 @@ declare export class TypeQueryNode extends TypeNode {
 
 // example: `{ readonly someKey: number }`
 declare export class TypeLiteralNode extends TypeNode {
-  members: TypeElement[];
+  members: (TypeElement | IndexSignatureDeclaration)[];
 }
 
 // example: `string[]`
@@ -757,9 +802,6 @@ declare export class IndexedAccessTypeNode extends TypeNode {
   objectType: TypeNode;
   indexType: TypeNode;
 }
-
-// FIXME add actual definition
-declare export class TypeAliasDeclaration extends Term {}
 
 // example: `{ readonly [K in "some" | "permissible" | "keys"]: string }`
 declare export class MappedTypeNode extends TypeNode {
