@@ -217,13 +217,14 @@ declare export class PropertySignature extends TypeElement {
 // common for classes and interfaces
 
 declare export class HeritageClause extends Term {
-  parent?: InterfaceDeclaration | ClassExpression | ClassDeclaration;
+  parent?: ClassExpression | ClassDeclaration | InterfaceDeclaration;
   types: ExpressionWithTypeArguments[];
 }
 declare export class ExtendsClause extends HeritageClause {}
 declare export class ImplementsClause extends HeritageClause {}
 
 declare export class IndexSignatureDeclaration extends Term {
+  parent?: ClassExpression | ClassDeclaration | InterfaceDeclaration | TypeLiteralNode;
   parameter: ParameterDeclaration;
   valueType: TypeNode;
 }
@@ -248,6 +249,7 @@ declare export class EnumDeclaration extends Statement {
 }
 
 declare export class EnumElement extends Term {
+  parent?: EnumDeclaration;
   name: PropertyName;
   initializer?: Expression;
 }
@@ -316,14 +318,18 @@ declare export class ExportLocalSpecifier extends Term {
 
 // property definition
 declare export class Method extends MethodDefinition {
+  parent?: ClassExpression | ClassDeclaration | ObjectExpression;
   isAsync: any;
   isGenerator: any;
   params: FormalParameters;
 }
 
-declare export class Getter extends MethodDefinition { }
+declare export class Getter extends MethodDefinition {
+  parent?: ClassExpression | ClassDeclaration | ObjectExpression;
+}
 
 declare export class Setter extends MethodDefinition {
+  parent?: ClassExpression | ClassDeclaration | ObjectExpression;
   param: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault;
   // param: Binding or BindingWithDefault;
 }
@@ -634,8 +640,6 @@ declare export class FormalParameters extends Term {
 }
 
 declare export class ParameterDeclaration extends Term {
-  // modifiers: ('public' | 'protected' | 'private' | 'readonly')[]
-  modifiers?: any[];
   // binding: Binding | BindingWithDefault;
   binding: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault;
   hasQuestionToken: any; // boolean
