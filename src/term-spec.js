@@ -411,9 +411,9 @@ declare export class CallExpression extends Expression {
   typeArguments?: TypeNode[];
   arguments: (SpreadElement | Expression)[];
 }
-
 declare export class CallExpressionE extends Expression {
   callee: Expression | Super;
+  typeArguments?: TypeNode[];
   arguments: Term[];
 }
 
@@ -454,6 +454,7 @@ declare export class IdentifierExpression extends Expression {
 
 declare export class NewExpression extends Expression {
   callee: Expression;
+  typeArguments?: TypeNode[];
   arguments: (SpreadElement | Expression)[];
 }
 
@@ -502,6 +503,15 @@ declare export class ParenthesizedExpression extends Expression {
   inner: any;
 }
 
+declare export class AsExpression extends Expression {
+  expression: Expression;
+  type: TypeNode;
+}
+
+declare export class TypeAssertion extends UnaryExpression {
+  type: TypeNode;
+  expression: UnaryExpression;
+}
 
 // statements
 declare export class BlockStatement extends Statement {
