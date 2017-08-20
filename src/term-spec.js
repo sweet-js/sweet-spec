@@ -128,13 +128,15 @@ declare export class AssignmentTargetPropertyProperty extends AssignmentTargetPr
 // class
 declare export class ClassExpression extends Expression {
   name?: BindingIdentifier;
-  super?: Expression;
+  typeParameters?: TypeParameterDeclaration[];
+  heritageClauses?: HeritageClause[];
   elements: ClassElement[];
 }
 
 declare export class ClassDeclaration extends Statement {
   name: BindingIdentifier;
-  super?: Expression;
+  typeParameters?: TypeParameterDeclaration[];
+  heritageClauses?: HeritageClause[];
   elements: ClassElement[];
 }
 
@@ -143,6 +145,22 @@ declare export class ClassElement extends Term {
   method: MethodDefinition;
 }
 
+// interface
+
+// FIXME add real definition
+declare export class InterfaceDeclaration extends Statement {}
+
+declare export class HeritageClause extends Term {
+  parent?: InterfaceDeclaration | ClassExpression | ClassDeclaration;
+  types: ExpressionWithTypeArguments[];
+}
+declare export class ExtendsClause extends HeritageClause {}
+declare export class ImplementsClause extends HeritageClause {}
+
+// type alias
+
+// FIXME add real definition
+declare export class TypeAlias extends Statement {}
 
 // modules
 declare export class Module extends Term {
@@ -219,6 +237,7 @@ declare export class Setter extends MethodDefinition {
 }
 
 declare export class DataProperty extends NamedObjectProperty {
+  hasQuestionToken: any; // boolean
   expression: Expression;
 }
 
@@ -267,13 +286,19 @@ declare export class ArrayExpression extends Expression {
 }
 
 declare export class ArrowExpression extends Expression {
-  isAsync: any;
+  isAsync: any; // boolean
+  isGenerator: any; // boolean
+  typeParameters?: TypeParameterDeclaration[];
   params: FormalParameters;
+  type?: TypeNode;
   body: FunctionBody | Expression;
 }
 declare export class ArrowExpressionE extends Expression {
-  isAsync: any;
+  isAsync: any; // boolean
+  isGenerator: any; // boolean
+  typeParameters?: TypeParameterDeclaration[];
   params: FormalParameters;
+  type?: TypeNode;
   body: Term[];
 }
 
@@ -291,6 +316,7 @@ declare export class BinaryExpression extends Expression {
 
 declare export class CallExpression extends Expression {
   callee: Expression | Super;
+  typeArguments?: TypeNode[];
   arguments: (SpreadElement | Expression)[];
 }
 
@@ -501,9 +527,17 @@ declare export class Directive extends Term {
 }
 
 declare export class FormalParameters extends Term {
-  // items: (Binding | BindingWithDefault)[];
-  items: (ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault)[];
-  rest?: BindingIdentifier;
+  items: ParameterDeclaration[];
+  rest?: ParameterDeclaration;
+}
+
+declare export class ParameterDeclaration extends Term {
+  // modifiers: ('public' | 'protected' | 'private' | 'static' | 'readonly')[]
+  modifiers?: any[];
+  // binding: Binding | BindingWithDefault;
+  binding: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault;
+  hasQuestionToken: any; // boolean
+  type?: TypeNode;
 }
 
 declare export class FunctionBody extends Term {
@@ -514,15 +548,21 @@ declare export class FunctionBody extends Term {
 declare export class FunctionDeclaration extends Statement {
   name: BindingIdentifier;
   isAsync: any; // boolean
-  isGenerator: any;
+  isGenerator: any; // boolean
+  hasQuestionToken: any; // boolean
+  typeParameters?: TypeParameterDeclaration[];
   params: FormalParameters;
+  type?: TypeNode;
   body: FunctionBody;
 }
 declare export class FunctionDeclarationE extends Statement {
   name: BindingIdentifier;
   isAsync: any; // boolean
-  isGenerator: any;
+  isGenerator: any; // boolean
+  hasQuestionToken: any; // boolean
+  typeParameters?: TypeParameterDeclaration[];
   params: FormalParameters;
+  type?: TypeNode;
   body: Term[];
 }
 
@@ -566,6 +606,7 @@ declare export class VariableDeclaration extends Term {
 declare export class VariableDeclarator extends Term {
   binding: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression;
   // binding: Binding;
+  type?: TypeNode;
   init?: Expression;
 }
 
@@ -576,11 +617,12 @@ declare export class OperatorDeclarator extends VariableDeclarator {
 
 declare export class TypeNode extends Term {}
 
-// FIXME add actual definition
-declare export class TypeParameterDeclaration extends Term {}
-
-// FIXME add actual definition
-declare export class ParameterDeclaration extends Term {}
+declare export class TypeParameterDeclaration extends Term {
+  parent?: ClassExpression | ClassDeclaration | InterfaceDeclaration | TypeAlias | ArrowExpression | FunctionDeclaration | SignatureTypeNode | MappedTypeNode;
+  name: any; // Identifier
+  constraint?: TypeNode;
+  default?: TypeNode;
+}
 
 // Note: TypeScript also has a separate ThisTypeNode interface that is
 //       not reflected here
@@ -592,7 +634,7 @@ declare export class KeywordTypeNode extends TypeNode {
 // type FunctionOrConstructorTypeNode = FunctionTypeNode | ConstructorTypeNode
 declare export class SignatureTypeNode extends TypeNode {
   typeParameters?: TypeParameterDeclaration[];
-  parameters: ParameterDeclaration[];
+  params: FormalParameters;
   type?: TypeNode;
 }
 // example: `(i: number, s: string) => boolean`
@@ -606,9 +648,6 @@ declare export class TypeReferenceNode extends TypeNode {
   typeName: any; // Identifier
   typeArguments?: TypeNode[];
 }
-
-// FIXME add actual definition
-declare export class HeritageClause extends Term {}
 
 // example: `SomeMapWithGenericClassValues["key"]<number, string>`
 declare export class ExpressionWithTypeArguments extends TypeNode {
