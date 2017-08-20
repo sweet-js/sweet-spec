@@ -32,7 +32,7 @@ declare export class NamedObjectProperty extends ObjectProperty {
   name: PropertyName;
 }
 declare export class MethodDefinition extends NamedObjectProperty {
-  body: FunctionBody;
+  body?: FunctionBody; // undefined only on abstract class methods
 }
 
 declare export class VariableReference extends Term {
@@ -134,6 +134,7 @@ declare export class ClassExpression extends Expression {
 }
 
 declare export class ClassDeclaration extends Statement {
+  isAbstract: any; // boolean
   name: BindingIdentifier;
   typeParameters?: TypeParameterDeclaration[];
   heritageClauses?: HeritageClause[];
@@ -141,9 +142,42 @@ declare export class ClassDeclaration extends Statement {
 }
 
 declare export class ClassElement extends Term {
-  isStatic: any;
+  isStatic: any; // boolean
+  accessModifier: any; // 'public' | 'protected' | 'private'
+}
+
+declare export class MethodClassElement extends ClassElement {
+  isAbstract: any; // boolean
+  hasQuestionToken: any; // boolean
   method: MethodDefinition;
 }
+
+declare export class ConstructorClassElement extends ClassElement {
+  params: ConstructorFormalParameters;
+  body: FunctionBody;
+}
+
+declare export class ConstructorFormalParameters extends Term {
+  items: ConstructorParameterDeclaration[];
+  rest?: ParameterDeclaration;
+}
+
+declare export class ConstructorParameterDeclaration extends Term {
+  accessModifier?: any; // 'public' | 'protected' | 'private'
+  hasReadonlyModifier: any; // boolean
+  parameter: ParameterDeclaration;
+}
+
+declare export class SemicolonClassElement extends ClassElement {}
+
+declare export class PropertyDeclaration extends ClassElement {
+  hasQuestionToken: any; // boolean
+  name: PropertyName;
+  type?: TypeNode;
+  initializer?: Expression;
+}
+
+
 
 // interface
 
@@ -532,7 +566,7 @@ declare export class FormalParameters extends Term {
 }
 
 declare export class ParameterDeclaration extends Term {
-  // modifiers: ('public' | 'protected' | 'private' | 'static' | 'readonly')[]
+  // modifiers: ('public' | 'protected' | 'private' | 'readonly')[]
   modifiers?: any[];
   // binding: Binding | BindingWithDefault;
   binding: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault;
