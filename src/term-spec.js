@@ -232,8 +232,25 @@ declare export class IndexSignatureDeclaration extends Term {
 
 // type alias
 
-// FIXME add real definition
-declare export class TypeAliasDeclaration extends Statement {}
+declare export class TypeAliasDeclaration extends Statement {
+  name: BindingIdentifier;
+  typeParameters?: TypeParameterDeclaration[];
+  type: TypeNode;
+}
+
+
+
+// enum
+
+declare export class EnumDeclaration extends Statement {
+  name: BindingIdentifier;
+  elements: EnumElement[];
+}
+
+declare export class EnumElement extends Term {
+  name: PropertyName;
+  initializer?: Expression;
+}
 
 
 
