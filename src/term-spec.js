@@ -171,8 +171,9 @@ declare export class ConstructorParameterDeclaration extends Term {
 declare export class SemicolonClassElement extends ClassElement {}
 
 declare export class PropertyDeclaration extends ClassElement {
-  hasQuestionToken: any; // boolean
+  hasReadonlyModifier: any; // boolean
   name: PropertyName;
+  hasQuestionToken: any; // boolean
   type?: TypeNode;
   initializer?: Expression;
 }
@@ -207,6 +208,7 @@ declare export class ConstructorSignatureDeclaration extends FunctionSignatureLi
 }
 
 declare export class PropertySignature extends TypeElement {
+  hasReadonlyModifier: any; // boolean
   name: PropertyName;
   hasQuestionToken: any; // boolean
   type?: TypeNode;
