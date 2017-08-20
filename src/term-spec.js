@@ -32,7 +32,13 @@ declare export class NamedObjectProperty extends ObjectProperty {
   name: PropertyName;
 }
 declare export class MethodDefinition extends NamedObjectProperty {
-  body?: FunctionBody; // undefined only on abstract class methods
+  type?: TypeNode;
+  body: FunctionBody;
+}
+
+declare export class AbstractMethodDefinition extends Term {
+  name: PropertyName;
+  type?: TypeNode;
 }
 
 declare export class VariableReference extends Term {
@@ -147,9 +153,13 @@ declare export class ClassElement extends Term {
 }
 
 declare export class MethodClassElement extends ClassElement {
-  isAbstract: any; // boolean
   hasQuestionToken: any; // boolean
   method: MethodDefinition;
+}
+
+declare export class AbstractMethodClassElement extends ClassElement {
+  hasQuestionToken: any; // boolean
+  method: AbstractMethodDefinition;
 }
 
 declare export class ConstructorClassElement extends ClassElement {
@@ -326,14 +336,29 @@ declare export class Method extends MethodDefinition {
   params: FormalParameters;
 }
 
+declare export class AbstractMethod extends AbstractMethodDefinition {
+  parent?: ClassExpression | ClassDeclaration;
+  isAsync: any; // boolean
+  isGenerator: any; // boolean
+  params: FormalParameters;
+}
+
 declare export class Getter extends MethodDefinition {
   parent?: ClassExpression | ClassDeclaration | ObjectExpression;
 }
 
+declare export class AbstractGetter extends AbstractMethodDefinition {
+  parent?: ClassExpression | ClassDeclaration;
+}
+
 declare export class Setter extends MethodDefinition {
   parent?: ClassExpression | ClassDeclaration | ObjectExpression;
-  param: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault;
-  // param: Binding or BindingWithDefault;
+  param: ParameterDeclaration;
+}
+
+declare export class AbstractSetter extends AbstractMethodDefinition {
+  parent?: ClassExpression | ClassDeclaration;
+  param: ParameterDeclaration;
 }
 
 declare export class DataProperty extends NamedObjectProperty {
