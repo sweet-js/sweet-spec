@@ -178,8 +178,6 @@ declare export class ConstructorParameterDeclaration extends Term {
   parameter: ParameterDeclaration;
 }
 
-declare export class SemicolonClassElement extends ClassElement {}
-
 declare export class PropertyDeclaration extends ClassElement {
   hasReadonlyModifier: any; // boolean
   name: PropertyName;
