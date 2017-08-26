@@ -45,6 +45,13 @@ declare export class VariableReference extends Term {
   name: any; // Identifier (string)
 }
 
+declare export class ParameterDeclarationBase extends Term {
+  // binding: Binding | BindingWithDefault;
+  binding: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault;
+  hasQuestionToken: any; // boolean
+  type?: TypeNode;
+}
+
 /* ***** Bindings ***** */
 
 // type Binding = (ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression);
@@ -172,10 +179,9 @@ declare export class ConstructorFormalParameters extends Term {
   rest?: ParameterDeclaration;
 }
 
-declare export class ConstructorParameterDeclaration extends Term {
+declare export class ConstructorParameterDeclaration extends ParameterDeclarationBase {
   accessModifier?: any; // 'public' | 'protected' | 'private'
   hasReadonlyModifier: any; // boolean
-  parameter: ParameterDeclaration;
 }
 
 declare export class PropertyDeclaration extends ClassElement {
@@ -664,12 +670,7 @@ declare export class FormalParameters extends Term {
   rest?: ParameterDeclaration;
 }
 
-declare export class ParameterDeclaration extends Term {
-  // binding: Binding | BindingWithDefault;
-  binding: ObjectBinding | ArrayBinding | BindingIdentifier | MemberExpression | BindingWithDefault;
-  hasQuestionToken: any; // boolean
-  type?: TypeNode;
-}
+declare export class ParameterDeclaration extends ParameterDeclarationBase {}
 
 declare export class FunctionBody extends Term {
   directives: any[];
