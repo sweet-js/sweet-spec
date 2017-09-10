@@ -139,6 +139,7 @@ declare export class AssignmentTargetPropertyProperty extends AssignmentTargetPr
 
 
 // class
+
 declare export class ClassExpression extends Expression {
   name?: BindingIdentifier;
   typeParameters?: TypeParameterDeclaration[];
@@ -205,27 +206,30 @@ declare export class InterfaceDeclaration extends Statement {
 
 declare export class TypeElement extends Term {}
 
-declare export class FunctionSignatureLikeTypeElement extends TypeElement {
-  typeParameters?: TypeParameterDeclaration[];
+// TypeScript interface elements
+declare export class TsTypeElement extends TypeElement {}
+
+declare export class FunctionSignatureLikeTsTypeElement extends TsTypeElement {
+  typeParameters?: TsTypeParameterDeclaration[];
   params: FormalParameters;
-  type?: TypeNode;
+  type?: TsTypeNode;
 }
 
-declare export class MethodSignature extends FunctionSignatureLikeTypeElement {
+declare export class TsMethodSignature extends FunctionSignatureLikeTsTypeElement {
   name: PropertyName;
 }
 
-declare export class CallSignatureDeclaration extends FunctionSignatureLikeTypeElement {}
+declare export class TsCallSignatureDeclaration extends FunctionSignatureLikeTsTypeElement {}
 
-declare export class ConstructorSignatureDeclaration extends FunctionSignatureLikeTypeElement {
+declare export class TsConstructorSignatureDeclaration extends FunctionSignatureLikeTsTypeElement {
   // note: TypeScript does not allow ConstructorFormalParameters here
 }
 
-declare export class PropertySignature extends TypeElement {
+declare export class TsPropertySignature extends TsTypeElement {
   hasReadonlyModifier: any; // boolean
   name: PropertyName;
   hasQuestionToken: any; // boolean
-  type?: TypeNode;
+  type?: TsTypeNode;
 }
 
 
@@ -240,7 +244,7 @@ declare export class ExtendsClause extends HeritageClause {}
 declare export class ImplementsClause extends HeritageClause {}
 
 declare export class IndexSignatureDeclaration extends Term {
-  parent?: ClassExpression | ClassDeclaration | InterfaceDeclaration | TypeLiteralNode;
+  parent?: ClassExpression | ClassDeclaration | InterfaceDeclaration | TsTypeLiteralNode;
   parameter: ParameterDeclaration;
   valueType: TypeNode;
 }
@@ -249,7 +253,9 @@ declare export class IndexSignatureDeclaration extends Term {
 
 // type alias
 
-declare export class TypeAliasDeclaration extends Statement {
+declare export class TypeAliasDeclaration extends Statement {}
+
+declare export class TsTypeAliasDeclaration extends TypeAliasDeclaration {
   name: BindingIdentifier;
   typeParameters?: TypeParameterDeclaration[];
   type: TypeNode;
@@ -259,13 +265,15 @@ declare export class TypeAliasDeclaration extends Statement {
 
 // enum
 
-declare export class EnumDeclaration extends Statement {
+declare export class EnumDeclaration extends Statement {}
+
+declare export class TsEnumDeclaration extends EnumDeclaration {
   name: BindingIdentifier;
-  elements: EnumElement[];
+  elements: TsEnumElement[];
 }
 
-declare export class EnumElement extends Term {
-  parent?: EnumDeclaration;
+declare export class TsEnumElement extends Term {
+  parent?: TsEnumDeclaration;
   name: PropertyName;
   initializer?: Expression;
 }
@@ -540,13 +548,13 @@ declare export class ParenthesizedExpression extends Expression {
   inner: any;
 }
 
-declare export class AsExpression extends Expression {
+declare export class TsAsExpression extends Expression {
   expression: Expression;
-  type: TypeNode;
+  type: TsTypeNode;
 }
 
-declare export class TypeAssertion extends UnaryExpression {
-  type: TypeNode;
+declare export class TsTypeAssertion extends UnaryExpression {
+  type: TsTypeNode;
   expression: UnaryExpression;
 }
 
@@ -751,42 +759,48 @@ declare export class OperatorDeclarator extends VariableDeclarator {
 
 // type annotations
 
-declare export class TypeParameterDeclaration extends Term {
-  parent?: ClassExpression | ClassDeclaration | InterfaceDeclaration | TypeAliasDeclaration | ArrowExpression | FunctionDeclaration | SignatureTypeNode | MappedTypeNode;
-  name: any; // Identifier
-  constraint?: TypeNode;
-  default?: TypeNode;
-}
-
 declare export class TypeNode extends Term {}
+
+declare export class TypeParameterDeclaration extends Term {}
+
+// TypeScript type annotations
+
+declare export class TsTypeNode extends TypeNode {}
+
+declare export class TsTypeParameterDeclaration extends TypeParameterDeclaration {
+  parent?: ClassExpression | ClassDeclaration | InterfaceDeclaration | TsTypeAliasDeclaration | ArrowExpression | FunctionDeclaration | SignatureTsTypeNode | MappedTsTypeNode;
+  name: any; // Identifier
+  constraint?: TsTypeNode;
+  default?: TsTypeNode;
+}
 
 // Note: TypeScript also has a separate ThisTypeNode interface that is
 //       not reflected here
-declare export class KeywordTypeNode extends TypeNode {
+declare export class TsKeywordTypeNode extends TsTypeNode {
   kind: any; // 'any' | 'number' | 'object' | 'boolean' | 'string' | 'symbol' |
              // 'this' | 'void' | 'undefined' | 'null' | 'never'
 }
 
 // type FunctionOrConstructorTypeNode = FunctionTypeNode | ConstructorTypeNode
-declare export class SignatureTypeNode extends TypeNode {
-  typeParameters?: TypeParameterDeclaration[];
+declare export class SignatureTsTypeNode extends TsTypeNode {
+  typeParameters?: TsTypeParameterDeclaration[];
   params: FormalParameters;
-  type?: TypeNode;
+  type?: TsTypeNode;
 }
 // example: `(i: number, s: string) => boolean`
-declare export class FunctionTypeNode extends SignatureTypeNode {}
+declare export class FunctionTsTypeNode extends SignatureTsTypeNode {}
 // example: `new (i: number, s: string) => SomeClass`
-declare export class ConstructorNodeType extends SignatureTypeNode {}
+declare export class ConstructorTsNodeType extends SignatureTsTypeNode {}
 
 // type TypeReferenceType = TypeReferenceNode | ExpressionWithTypeArguments;
 
-declare export class TypeReferenceNode extends TypeNode {
+declare export class TsTypeReferenceNode extends TsTypeNode {
   typeName: any; // Identifier
   typeArguments?: TypeNode[];
 }
 
 // example: `SomeMapWithGenericClassValues["key"]<number, string>`
-declare export class ExpressionWithTypeArguments extends TypeNode {
+declare export class ExpressionWithTsTypeArguments extends TsTypeNode {
   parent?: HeritageClause;
   /*
    * In TypeScript, the "destination" class/interface of a heritage clause is
@@ -796,7 +810,7 @@ declare export class ExpressionWithTypeArguments extends TypeNode {
    * that permissiveness.
    */
   expression: Expression;
-  typeArguments?: TypeNode[];
+  typeArguments?: TsTypeNode[];
 }
 
 // example 1:
@@ -805,71 +819,71 @@ declare export class ExpressionWithTypeArguments extends TypeNode {
 // example 2:
 //   `this is string` in a boolean-returning class method declared as
 //   `isString(): this is string`
-declare export class TypePredicateNode extends TypeNode {
+declare export class TsTypePredicateNode extends TsTypeNode {
   parameterName: any; //  Identifier | 'this'
-  type: TypeNode;
+  type: TsTypeNode;
 }
 
 // example: `typeof someVariable`
-declare export class TypeQueryNode extends TypeNode {
+declare export class TsTypeQueryNode extends TsTypeNode {
   exprName: any; // Identifier
 }
 
 // example: `{ readonly someKey: number }`
-declare export class TypeLiteralNode extends TypeNode {
-  members: (TypeElement | IndexSignatureDeclaration)[];
+declare export class TsTypeLiteralNode extends TsTypeNode {
+  members: (TsTypeElement | IndexSignatureDeclaration)[];
 }
 
 // example: `string[]`
-declare export class ArrayTypeNode extends TypeNode {
-  elementType: TypeNode;
+declare export class ArrayTsTypeNode extends TsTypeNode {
+  elementType: TsTypeNode;
 }
 
 // example: `[string, number]`
-declare export class TupleTypeNode extends TypeNode {
-  elementTypes: TypeNode[];
+declare export class TupleTsTypeNode extends TsTypeNode {
+  elementTypes: TsTypeNode[];
 }
 
 // example: `number | string`
-declare export class UnionTypeNode extends TypeNode {
-  types: TypeNode[];
+declare export class UnionTsTypeNode extends TsTypeNode {
+  types: TsTypeNode[];
 }
 
 // example: `number & string`
-declare export class IntersectionTypeNode extends TypeNode {
-  types: TypeNode[];
+declare export class IntersectionTsTypeNode extends TsTypeNode {
+  types: TsTypeNode[];
 }
 
 // example: `(number)`
-declare export class ParenthesizedTypeNode extends TypeNode {
-  type: TypeNode;
+declare export class ParenthesizedTsTypeNode extends TsTypeNode {
+  type: TsTypeNode;
 }
 
 // example: `keyof { a: number, b: string }`
-declare export class TypeOperatorNode extends TypeNode {
+declare export class TsTypeOperatorNode extends TsTypeNode {
   operator: any; // 'keyof'
-  type: TypeNode;
+  type: TsTypeNode;
 }
 
 // example:
 //   `SomeClass[number]`
 //   where
 //   `class SomeClass { [index: number]: string }`
-declare export class IndexedAccessTypeNode extends TypeNode {
-  objectType: TypeNode;
-  indexType: TypeNode;
+declare export class IndexedAccessTsTypeNode extends TsTypeNode {
+  objectType: TsTypeNode;
+  indexType: TsTypeNode;
 }
 
 // example: `{ readonly [K in "some" | "permissible" | "keys"]: string }`
-declare export class MappedTypeNode extends TypeNode {
-  parent?: TypeAliasDeclaration;
+declare export class MappedTsTypeNode extends TsTypeNode {
+  parent?: TsTypeAliasDeclaration;
   hasReadonlyToken: any; // boolean
-  typeParameter: TypeParameterDeclaration;
+  typeParameter: TsTypeParameterDeclaration;
   hasQuestionToken: any; // boolean
-  type?: TypeNode;
+  type?: TsTypeNode;
 }
 
 // examples: `"someValue"`, `42`, `null`, `false`
-declare export class LiteralTypeNode extends TypeNode {
+declare export class LiteralTsTypeNode extends TsTypeNode {
   literal: Expression;
 }
