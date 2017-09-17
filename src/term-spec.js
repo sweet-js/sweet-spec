@@ -140,40 +140,46 @@ declare export class AssignmentTargetPropertyProperty extends AssignmentTargetPr
 
 // class
 
-declare export class ClassExpression extends Expression {
+declare export class ClassExpressionBase extends Expression {
   name?: BindingIdentifier;
-  super?: Expression;
-  elements: ClassElement[];
 }
 
-declare export class ClassDeclaration extends Statement {
+declare export class ClassDeclarationBase extends Statement {
   name: BindingIdentifier;
+}
+
+declare export class ClassExpression extends ClassExpressionBase {
   super?: Expression;
   elements: ClassElement[];
 }
 
-declare export class ClassElement extends Term {
+declare export class ClassDeclaration extends ClassDeclarationBase {
+  super?: Expression;
+  elements: ClassElement[];
+}
+
+declare export class TsClassExpression extends ClassExpressionBase {
+  typeParameters?: TsTypeParameterDeclaration[];
+  heritageClauses?: TsHeritageClause[];
+  elements: (TsClassElement | TsIndexSignatureDeclaration)[];
+}
+
+declare export class TsClassDeclaration extends ClassDeclarationBase {
+  isAbstract: any; // boolean
+  typeParameters?: TsTypeParameterDeclaration[];
+  heritageClauses?: TsHeritageClause[];
+  elements: (TsClassElement | TsIndexSignatureDeclaration)[];
+}
+
+declare export class ClassElementBase extends Term {
   isStatic: any; // boolean
+}
+
+declare export class ClassElement extends ClassElementBase {
   method: MethodDefinition;
 }
 
-declare export class TsClassExpression extends Expression {
-  name?: BindingIdentifier;
-  typeParameters?: TsTypeParameterDeclaration[];
-  heritageClauses?: TsHeritageClause[];
-  elements: (TsClassElement | TsIndexSignatureDeclaration)[];
-}
-
-declare export class TsClassDeclaration extends Statement {
-  isAbstract: any; // boolean
-  name: BindingIdentifier;
-  typeParameters?: TsTypeParameterDeclaration[];
-  heritageClauses?: TsHeritageClause[];
-  elements: (TsClassElement | TsIndexSignatureDeclaration)[];
-}
-
-declare export class TsClassElement extends Term {
-  isStatic: any; // boolean
+declare export class TsClassElement extends ClassElementBase {
   accessModifier?: any; // 'public' | 'protected' | 'private'
 }
 
@@ -361,8 +367,9 @@ declare export class ExportLocalSpecifier extends Term {
 // property definition
 declare export class Method extends MethodDefinition {
   parent?: ClassExpression | ClassDeclaration | ObjectExpression | TsClassExpression | TsClassDeclaration;
-  isAsync: any;
-  isGenerator: any;
+  isAsync: any; // boolean
+  isGenerator: any; // boolean
+  typeParameters?: TypeParameterDeclaration[];
   params: FormalParameters;
 }
 
@@ -370,6 +377,7 @@ declare export class TsAbstractMethod extends TsAbstractMethodDefinition {
   parent?: TsClassExpression | TsClassDeclaration;
   isAsync: any; // boolean
   isGenerator: any; // boolean
+  typeParameters?: TypeParameterDeclaration[];
   params: FormalParameters;
 }
 
