@@ -442,7 +442,6 @@ declare export class ArrayExpression extends Expression {
 
 declare export class ArrowExpression extends Expression {
   isAsync: any; // boolean
-  isGenerator: any; // boolean
   typeParameters?: TypeParameterDeclaration[];
   params: FormalParameters;
   type?: TypeNode;
@@ -450,7 +449,6 @@ declare export class ArrowExpression extends Expression {
 }
 declare export class ArrowExpressionE extends Expression {
   isAsync: any; // boolean
-  isGenerator: any; // boolean
   typeParameters?: TypeParameterDeclaration[];
   params: FormalParameters;
   type?: TypeNode;
