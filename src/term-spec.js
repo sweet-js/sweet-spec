@@ -346,11 +346,11 @@ declare export class ExportLocals extends ExportDeclaration {
 }
 
 declare export class Export extends ExportDeclaration {
-  declaration: FunctionDeclaration | ClassDeclaration | TsClassDeclaration | VariableDeclaration;
+  declaration: FunctionDeclaration | ClassDeclarationBase | VariableDeclaration;
 }
 
 declare export class ExportDefault extends ExportDeclaration {
-  body: FunctionDeclaration | ClassDeclaration | TsClassDeclaration | Expression;
+  body: FunctionDeclaration | ClassDeclarationBase | Expression;
 }
 
 declare export class ExportFromSpecifier extends Term {
@@ -366,7 +366,7 @@ declare export class ExportLocalSpecifier extends Term {
 
 // property definition
 declare export class Method extends MethodDefinition {
-  parent?: ClassExpression | ClassDeclaration | ObjectExpression | TsClassExpression | TsClassDeclaration;
+  parent?: ClassExpressionBase | ClassDeclarationBase | ObjectExpression;
   isAsync: any; // boolean
   isGenerator: any; // boolean
   typeParameters?: TypeParameterDeclaration[];
@@ -382,7 +382,7 @@ declare export class TsAbstractMethod extends TsAbstractMethodDefinition {
 }
 
 declare export class Getter extends MethodDefinition {
-  parent?: ClassExpression | ClassDeclaration | ObjectExpression | TsClassExpression | TsClassDeclaration;
+  parent?: ClassExpressionBase | ClassDeclarationBase | ObjectExpression;
 }
 
 declare export class TsAbstractGetter extends TsAbstractMethodDefinition {
@@ -390,7 +390,7 @@ declare export class TsAbstractGetter extends TsAbstractMethodDefinition {
 }
 
 declare export class Setter extends MethodDefinition {
-  parent?: ClassExpression | ClassDeclaration | ObjectExpression | TsClassExpression | TsClassDeclaration;
+  parent?: ClassExpressionBase | ClassDeclarationBase | ObjectExpression;
   param: ParameterDeclaration;
 }
 
